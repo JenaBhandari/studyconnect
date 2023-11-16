@@ -1,1 +1,25 @@
+/*
+In this file, we will create a form that allows the user to login by entering their email and password. 
+If they don't enter a USC email, we will display an error message "Enter in the format youremail@usc.edu", and the form won't be submitted
+If they don't enter a username, we will display an error message "Please enter your email", and the form won't be submitted
+If they don't enter an email, we will display an error message, "Please enter your password", and the form won't be submitted
+If the email and pass don't, we will display an error message "Email and password don't match, please try again", and the form won't be submitted
+We will validate these using the database table
+Error messages will be handled by changing a span tag thru javascript
+
+---------------------------------------------------------------------------------------------------------------------------------------
+ex: this is the enter email form input that would be placed within a form
+<div class="col-12 mt-2 col-sm-4 mt-sm-0">
+							<label for="email" class="sr-only">Enter your USC email:</label>
+
+							<input type="text" class="form-control" id="email" placeholder="ttrojan@usc.edu...">
+                            <small id="email-error" class="form-text text-danger"></small>
+
+</div> <!-- .col -->
+
+this is the script that changes the #email-error message if the email length is 0:
+
+document.querySelector("#email-error").innerHTML = 'Enter a value for item.'
+---------------------------------------------------------------------------------------------------------------------------------------
+*/
 
