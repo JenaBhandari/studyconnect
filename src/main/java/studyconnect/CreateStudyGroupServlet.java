@@ -32,7 +32,7 @@ public class CreateStudyGroupServlet extends HttpServlet {
 		String time = request.getParameter("time");
 		String location = request.getParameter("location");
 		
-		// TO-DO: Add to database
+		
 		StudyGroups studyGroup = new StudyGroups(courseID, hostID, day, time, location);
 		if (StudyConnectDB.addStudyGroup(studyGroup)) {
 			System.out.println("Successfully added study group");
