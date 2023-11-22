@@ -26,18 +26,16 @@ public class JoinStudyGroupServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String studyGroupID = request.getParameter("studyGroupID");
-		String userID = request.getParameter("userID");
+		int studyGroupID = Integer.valueOf(request.getParameter("studyGroupID"));
+		int userID =  Integer.valueOf(request.getParameter("userID"));
 			
-		/*User user = new User(firstName, lastName, email, phone, password);
-		if (StudyConnectDB.addUserStudy(user)) {
-			System.out.println("Successfully signed up user");
+		if (StudyConnectDB.addUserToStudyGroup(studyGroupID, userID)) {
+			System.out.println("Successfully add user to study group");
 			//TO-DO: Communicate this to the client somehow
 		} else {
-			System.out.println("Couldn't sign up user");
+			System.out.println("Couldn't add user to study group");
 			//TO-DO: Communicate this to the client somehow
-		}*/
-		
+		}
 	}
 
 	/**
