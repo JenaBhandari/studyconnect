@@ -73,10 +73,43 @@
          </nav>
 
         <!-- Your website content goes here -->
-        <div id="landing">
 
+        <!-- using bootstrap create a landing page that  is 1000px in height and have it be two columns (one 7 and the other 5)
+        have it display "Elevate your learning\njourney together" in large font with some padding below the nav bar and "Upgrade your study game! Connect with smart study partners./n 
+        Sign up for a better learning journey!" below it in smaller font. and then below that with small padding like 20px, 
+        have a form that allows a @usc.edu email to be typed in and submitted with a submite button that is called "Sign Up". The signup button should lead you to a new page on signup.html.
+         and also let the form on the signup.html page autofill in the email entered-->
+        <!-- Landing Section -->
+        <div id="landing" class="container-fluid mt-4">
+            <div class="row">
+                <!-- Left Column (7/12) -->
+                <div class="col-md-7">
+                    <h1 class="display-3">Elevate your learning<br>journey together</h1>
+                    <p class="lead">Upgrade your study game! Connect with smart study partners.<br>Sign up for a better learning journey!</p>
+                    <!-- Form -->
+                    <form action="signup.html" method="post">
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Enter your @usc.edu email" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Sign Up</button>
+                    </form>
+                </div>
+                <!-- Right Column (5/12) -->
+                <div class="col-md-5">
+                    <!-- You can add any additional content or images here if needed -->
+                </div>
+            </div>
         </div>
-        <h1>Hello</h1>
+
+
+
+        <!-- have a footer that just says "CSCI 201 Project" in small font sitting at the bottom of the page always. -->
+        <!-- Footer Section -->
+        <div id="footer" class="text-muted text-center py-2">
+            <p>CSCI 201 Project</p>
+        </div>
+
 
     </div>
 
