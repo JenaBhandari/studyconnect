@@ -132,12 +132,12 @@ document.querySelector("#email-error").innerHTML = 'Enter a value for item.'
         <!-- Landing Section -->
         <div id="landing" class="container-fluid vh-100 d-flex align-items-center justify-content-center">
             <div class="row">
-                <!-- center Column (5/12) -->
+				
                 <div class="text-center">
                     <h1 class="display-3">Log In</h1>
 
                     <!-- Form -->
-                    <form id="signupForm" action="info.html" method="post" onsubmit="return validateForm()">
+                    <form id="loginForm" action="LoginServlet" method="post" onsubmit="return validateForm()">
                         <div class="form-group">
                             <label for="email">Email:</label>
                             <input type="email" class="form-control" id="email" name="email" placeholder="Enter @usc.edu email" required>
@@ -171,26 +171,34 @@ document.querySelector("#email-error").innerHTML = 'Enter a value for item.'
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
-    <script>
+	<script>
         function validateForm() {
-            // Validation logic for the form fields
-            
-			// check to see if there is a match in the database between password and email: 
-			// Users table:
-			// TABLE Users (
-			// userID INT AUTO_INCREMENT PRIMARY KEY,
-			// firstName VARCHAR(50) NOT NULL,
-			// lastName VARCHAR(50) NOT NULL,
-			// email VARCHAR(255) UNIQUE NOT NULL,
-			// phone VARCHAR(12) UNIQUE NOT NULL, 
-			// password VARCHAR(255) NOT NULL
-			// );
+            var emailInput = document.getElementById('email');
+            var passwordInput = document.getElementById('password');
+            var emailError = document.getElementById('emailError');
+            var passwordError = document.getElementById('passwordError');
 
-    
-            // Proceed to profile.html
+            // Reset errors
+            emailError.textContent = '';
+            passwordError.textContent = '';
+
+            // Validation logic for email
+            if (!emailInput.value.endsWith('usc.edu')) {
+                emailError.textContent = 'Enter a valid USC email (e.g., youremail@usc.edu)';
+                return false;
+            }
+
+            // Validation logic for password (add more if needed)
+            if (passwordInput.value.length === 0) {
+                passwordError.textContent = 'Please enter your password';
+                return false;
+            }
+
+            // Proceed to LoginServlet server side code
             return true;
         }
     </script>
+
 
 </body>
 </html>

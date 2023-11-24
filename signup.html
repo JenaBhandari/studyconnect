@@ -150,7 +150,7 @@ document.querySelector("#email-error").innerHTML = 'Enter a value for item.'
                     <h1 class="display-3">Sign Up</h1>
 
                     <!-- Form -->
-                    <form id="signupForm" action="info.html" method="post" onsubmit="return validateForm()">
+                    <form id="signupForm" action="SignupServlet" method="post" onsubmit="return validateForm()">
                         <div class="form-group">
                             <label for="firstName">First Name:</label>
                             <input type="text" class="form-control" id="firstName" name="firstName" required>
@@ -258,7 +258,7 @@ document.querySelector("#email-error").innerHTML = 'Enter a value for item.'
                 return false;
             }
     
-            // add to database??
+            // add to database in server side code
     
             // Proceed to info.html
             return true;
