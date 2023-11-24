@@ -1,46 +1,5 @@
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Your Website Title</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <style>
 
-
-        @font-face 
-        {
-            font-family: 'JockeyOne';
-            src: url('path/to/fonts/Jockey_One/JockeyOne-Regular.ttf') format('truetype');
-        }
-
-
-        /* this applies the font to the entire body */
-        body 
-        {
-            font-family: 'JockeyOne', sans-serif; 
-        }
-
-        h1, h2, h3, p 
-        {
-            font-family: 'JockeyOne', sans-serif;
-        }
-
-
-        #header {
-            background-color: #007bff; /* Bootstrap's primary color */
-            color: #fff; /* Text color */
-            padding: 10px;
-            text-align: center;
-        }
-    </style>
-</head>
-<body>
-
-
-    
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -61,13 +20,37 @@
 
         */
 
-        #main {
+        #landing {
             background-color: #A0C1D1;
             color: #232C33;
         }
 
         #option {
             background-color: #5A7D7C;
+        }
+
+        @font-face 
+        {
+            font-family: 'JockeyOne';
+            src: url('fonts/Jockey_One/JockeyOne-Regular.ttf') format('truetype');
+        }
+
+
+        /* this applies the font to the entire body */
+        body 
+        {
+            font-family: 'JockeyOne', sans-serif; 
+        }
+
+        h1, h2, h3, p 
+        {
+            font-family: 'JockeyOne', sans-serif;
+        }
+
+        #footer
+        {
+            background-color: #B5B2C2;
+            color: #232C33;
         }
 
     </style>
@@ -95,18 +78,12 @@
                 </div>
          </nav>
 
-        <!-- Your website content goes here -->
-
-        <!-- using bootstrap create a landing page that  is 1000px in height and have it be two columns (one 7 and the other 5)
-        have it display "Elevate your learning\njourney together" in large font with some padding below the nav bar and "Upgrade your study game! Connect with smart study partners./n 
-        Sign up for a better learning journey!" below it in smaller font. and then below that with small padding like 20px, 
-        have a form that allows a @usc.edu email to be typed in and submitted with a submite button that is called "Sign Up". The signup button should lead you to a new page on signup.html.
-         and also let the form on the signup.html page autofill in the email entered-->
         <!-- Landing Section -->
-        <div id="landing" class="container-fluid mt-4">
+
+        <div id="landing" class="container-fluid vh-100">
             <div class="row">
                 <!-- Left Column (7/12) -->
-                <div class="col-md-7">
+                <div class="col-md-7 mt-3">
                     <h1 class="display-3">Elevate your learning<br>journey together</h1>
                     <p class="lead">Upgrade your study game! Connect with smart study partners.<br>Sign up for a better learning journey!</p>
                     <!-- Form -->
@@ -120,7 +97,8 @@
                 </div>
                 <!-- Right Column (5/12) -->
                 <div class="col-md-5">
-                    <!-- You can add any additional content or images here if needed -->
+                    <!-- image -->
+                    
                 </div>
             </div>
         </div>
@@ -129,8 +107,8 @@
 
         <!-- have a footer that just says "CSCI 201 Project" in small font sitting at the bottom of the page always. -->
         <!-- Footer Section -->
-        <div id="footer" class="text-muted text-center py-2">
-            <p>CSCI 201 Project</p>
+        <div id="footer" class="text-center py-2">
+            <p>CSCI 201 Project - Group 15</p>
         </div>
 
 
