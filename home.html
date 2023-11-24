@@ -53,6 +53,16 @@
             color: #232C33;
         }
 
+        /* navbar img original */
+        .navbar-brand img {
+            height: 40px;
+        }
+
+        /* for small screen */
+        @media (max-width: 1000px) {
+            
+        }
+
     </style>
 </head>
 <body>
@@ -60,23 +70,25 @@
     <div id="main" class="container-fluid">
 
         <!-- Navbar -->
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="#">INSERT PIC HERE</a>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light col-12">
+            <a class="navbar-brand" href="home.html">
+                <img class="img-fluid navbar-brand" src="img/groupwithbook.png" alt="group with book picture">
+            </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
+                <span class="navbar-toggler-icon"></span>
             </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="home.html">StudyConnect Home<span class="sr-only">(current)</span></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="login.html">Log In</a>
-                        </li>
-
-                    </ul>
-                </div>
-         </nav>
+            <div class="collapse navbar-collapse col-11" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="home.html">StudyConnectHome<span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="login.html">LogIn</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        
 
         <!-- Landing Section -->
 
@@ -87,10 +99,11 @@
                     <h1 class="display-3">Elevate your learning<br>journey together</h1>
                     <p class="lead">Upgrade your study game! Connect with smart study partners.<br>Sign up for a better learning journey!</p>
                     <!-- Form -->
-                    <form action="signup.html" method="post">
+                    <form id="signupForm" action="signup.html" method="post" onsubmit="return validateEmail()">
                         <div class="form-group">
                             <label for="email">Email:</label>
                             <input type="email" class="form-control" id="email" name="email" placeholder="Enter your @usc.edu email" required>
+                            <small id="emailError" class="text-danger"></small>
                         </div>
                         <button type="submit" class="btn btn-primary">Sign Up</button>
                     </form>
@@ -98,7 +111,9 @@
                 <!-- Right Column (5/12) -->
                 <div class="col-md-5">
                     <!-- image -->
-                    
+
+                    <img class="col-md-10 img-center mt-5 "src="img/groupwithbook.png" alt="group with book picture">
+
                 </div>
             </div>
         </div>
@@ -118,6 +133,21 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <script>
+        function validateEmail() {
+            var emailInput = document.getElementById('email');
+            var emailError = document.getElementById('emailError');
+
+            if (!emailInput.value.endsWith('usc.edu')) {
+                emailError.textContent = 'Email must end with "usc.edu"';
+                return false;
+            } else {
+                emailError.textContent = ''; // Clear the error message
+                return true;
+            }
+        }
+    </script>
 
 </body>
 </html>
