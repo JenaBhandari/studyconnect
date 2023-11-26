@@ -103,6 +103,7 @@ document.querySelector("#email-error").innerHTML = 'Enter a value for item.'
         }
 
     </style>
+    <script type="text/javascript" src="login.js"></script>
 </head>
 <body>
 
@@ -150,7 +151,7 @@ document.querySelector("#email-error").innerHTML = 'Enter a value for item.'
                             <small id="passwordError" class="form-text text-danger"></small>
                         </div>
 
-                        <button type="submit" class="btn btn-primary">Log In</button>
+                        <input type="button" class="btn btn-primary" value="Log In" onclick="LogInUser();"/>
                         
                     </form>
                 </div>
@@ -202,4 +203,3 @@ document.querySelector("#email-error").innerHTML = 'Enter a value for item.'
 
 </body>
 </html>
-
