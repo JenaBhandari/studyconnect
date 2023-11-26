@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 /**
  * Servlet implementation class LoginServlet
@@ -33,20 +34,24 @@ public class LoginServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
+
+		JsonObject result = new JsonObject();
+
+		System.out.println("LoginServlet respone:" + result);
+
 		
 		User user = StudyConnectDB.getUser(email);
 		if (user == null) {
-			System.out.println("User does not exist"); 
-			//TO-DO: Communicate this to the client somehow
+			result.addProperty("errormsg", "Username does not exist");
 		} else if (!password.equals(user.getPassword())) {
-			System.out.println("Invalid password"); 
-			//TO-DO: Communicate this to the client somehow
+			result.addProperty("errormsg", "Invalid password");
 		} else {
 			System.out.println("Successful login");
-			//TO-DO: Communicate this to the client somehow
 		}
 		
-		
+		System.out.println("LoginServlet respone:" + result);
+		PrintWriter out = response.getWriter();
+		out.print(result.toString());
 		//System.out.println("   email: " + email + "   password: " + password);
 		
 	}
