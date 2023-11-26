@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 /**
  * Servlet implementation class SignupServlet
@@ -36,18 +37,24 @@ public class SignupServlet extends HttpServlet {
 		String email = request.getParameter("email");
 		String phone = request.getParameter("phone");
 		String password = request.getParameter("password");
-		String confirmPassword = request.getParameter("confirmPassword");
 		
-		System.out.println("first name: " + firstName + "   last name: " + lastName + "   email: " + email + "   password: " + password + "   confirmPassword: " + confirmPassword);
+		JsonObject result = new JsonObject();
+
+		
+		//System.out.println("first name: " + firstName + "   last name: " + lastName + "   email: " + email + "   password: " + password + "   confirmPassword: " + confirmPassword);
 	
 		User user = new User(firstName, lastName, email, phone, password);
 		if (StudyConnectDB.addUser(user)) {
 			System.out.println("Successfully signed up user");
-			//TO-DO: Communicate this to the client somehow
+			
 		} else {
 			System.out.println("Couldn't sign up user");
-			//TO-DO: Communicate this to the client somehow
+			result.addProperty("errormsg", "Email or phone already in use");
 		}
+		
+		System.out.println("SignUpServlet respone:" + result);
+		PrintWriter out = response.getWriter();
+		out.print(result.toString());
 	}
 
 	/**
