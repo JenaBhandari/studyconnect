@@ -116,6 +116,7 @@ document.querySelector("#email-error").innerHTML = 'Enter a value for item.'
         }
 
     </style>
+    <script type="text/javascript" src="signup.js"></script>
 </head>
 <body>
 
@@ -181,7 +182,7 @@ document.querySelector("#email-error").innerHTML = 'Enter a value for item.'
                             <small id="passwordError" class="form-text text-danger"></small>
                         </div>
 
-                        <button type="submit" class="btn btn-primary">Sign Up</button>
+                        <input type="button" class="btn btn-primary" value="Sign Up" onclick="SignUpUser();"/>
 
                     </form>
                 </div>
@@ -267,4 +268,3 @@ document.querySelector("#email-error").innerHTML = 'Enter a value for item.'
 
 </body>
 </html>
-
