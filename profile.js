@@ -56,16 +56,17 @@ function displayUserProfile(data){
 }
 function displayinGroups(data){
 	const inGroups = document.getElementById("inGroups");
-	displayGroups(inGroups, data);	
+	const groups = data.studyGroups;
+	displayGroups(inGroups, groups);	
 }
 function displayhostingGroups(data){
 	const inGroups = document.getElementById("hostGroups");
-	displayGroups(inGroups, data);	
+	const groups = data.hostingGroups;
+	displayGroups(inGroups, groups);	
 }
 
-function displayGroups(inGroups,data){
+function displayGroups(inGroups,groups){
 	// loop through all the study groups:
-	const groups = data.hostingGroups;
 	const container = document.createElement("div");
 	inGroups.classList.add("container", "px-4");
 	container.classList.add("row","gx-5");
