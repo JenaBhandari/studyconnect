@@ -6,8 +6,11 @@
 	let baseURL = window.location.origin + "/studyconnect/";
 	var url = new URL("SignupServlet", baseURL);
 	var params = {
+		firstName: document.getElementById("firstName").value,
+		lastName: document.getElementById("lastName").value,
 		email: document.getElementById("email").value,
 		phone: document.getElementById("phone").value,
+		password: document.getElementById("password").value,
 	}
 	url.search = new URLSearchParams(params).toString();
 	fetch(url)

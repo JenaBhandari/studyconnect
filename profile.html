@@ -1,0 +1,135 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Website Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+
+        /*
+
+        5A7D7C - dark green
+        F1F3FA - whitish color
+        232C33 - blackish color
+        A0C1D1 - light blue
+        B5B2C2 - purple
+
+        */
+
+        #landing {
+            background-color: #A0C1D1;
+            color: #232C33;
+        }
+
+        #option {
+            background-color: #5A7D7C;
+        }
+
+        @font-face 
+        {
+            font-family: 'JockeyOne';
+            src: url('fonts/Jockey_One/JockeyOne-Regular.ttf') format('truetype');
+        }
+
+
+        /* this applies the font to the entire body */
+        body 
+        {
+            font-family: 'JockeyOne', sans-serif; 
+        }
+
+        h1, h2, h3, p 
+        {
+            font-family: 'JockeyOne', sans-serif;
+            padding-left: 40px;
+        }
+
+        #footer
+        {
+            background-color: #B5B2C2;
+            color: #232C33;
+        }
+
+        /* navbar img original */
+        .navbar-brand img {
+            height: 40px;
+        }
+
+        /* for small screen */
+        @media (max-width: 1000px) {
+            
+        }
+        /* for profile information*/
+        .subcontent{
+			margin-left: 40px;
+		}
+
+    </style>
+</head>
+<body>
+
+    <div id="main" class="container-fluid">
+
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light col-12">
+            <a class="navbar-brand" href="home.html">
+                <img class="img-fluid navbar-brand" src="img/groupwithbook.png" alt="group with book picture">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse col-11" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="home.html">StudyConnectHome<span class="sr-only">(current)</span></a>
+                    </li>
+                    <!--<li class="nav-item" disabled>
+                        <a class="nav-link" href="login.html">LogIn</a>
+                    </li>-->
+                </ul>
+            </div>
+        </nav>
+        
+
+        <!-- Landing Section -->
+
+        <div id="landing" class="container-fluid vh-100">
+            <div class="row">
+                <!-- Left Column (7/12) -->
+                <div class="col-md-7 mt-3">
+                    <h1 class="display-3">PROFILE</h1>
+                    <div class="lead subcontent" id="userprofile"></div>
+                </div>
+                <div class="col-md-7 mt-3">
+					<h1 class="display-3">Study Groups You are In: </h1>
+					<br>
+					<div id="inGroups"></div>
+                </div>
+                <div class="col-md-7 mt-3">
+					<a href="index.html" class="btn btn-primary float-right">Join New Study Group</a>
+				</div>
+                <div class="col-md-7 mt-3">
+					<h1 class="display-3">Hosting Groups: </h1>
+					<div id="hostGroups"></div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- have a footer that just says "CSCI 201 Project" in small font sitting at the bottom of the page always. -->
+        <!-- Footer Section -->
+        <div id="footer" class="text-center py-2">
+            <p>CSCI 201 Project - Group 15</p>
+        </div>
+
+
+    </div>
+	<script src="profile.js" defer></script>
+</body>
+</html>
+
