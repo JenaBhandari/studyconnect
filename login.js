@@ -17,7 +17,7 @@
 			if ('errormsg' in response) {
 				document.getElementById("passwordError").innerHTML = response['errormsg'];
 			} else {
-				// TO-DO: Redirect to info.html
+				window.location.href = baseURL + 'profile.html?email=' + response['success']; // Redirects
 			}
 		}).catch(function(error) {
 			console.log('request failed', error)
