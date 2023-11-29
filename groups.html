@@ -112,11 +112,10 @@
                     </div> <!-- .form-row -->
                 </form>
             </div> <!-- .row -->
-            
+
              <div class="row col-12">
                  
                 <!-- Crate a table -->
-                <!-- headers are gong ot  -->
 
                 <table class="table table-responsive table-striped col-12">
 				<thead>
@@ -128,14 +127,10 @@
                         <th>Join</th>
 					</tr>
 				</thead>
-				<tbody>
+				<tbody id="studyGroupTableBody">
 
                     <tr>
-                        <th>CS201</th>
-                        <th>CS201</th>
-                        <th>CS201</th>
-                        <th>CS201</th>
-                        <th><input type="button" class="btn btn-primary" value="Join!" onclick=""/></th>
+
                     </tr>
 
 				</tbody>
@@ -158,32 +153,80 @@
      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
  
      <script>
-         function validateForm() {
-             var emailInput = document.getElementById('email');
-             var passwordInput = document.getElementById('password');
-             var emailError = document.getElementById('emailError');
-             var passwordError = document.getElementById('passwordError');
- 
-             // Reset errors
-             emailError.textContent = '';
-             passwordError.textContent = '';
- 
-             // Validation logic for email
-             if (!emailInput.value.endsWith('usc.edu')) {
-                 emailError.textContent = 'Enter a valid USC email (e.g., youremail@usc.edu)';
-                 return false;
-             }
- 
-             // Validation logic for password (add more if needed)
-             if (passwordInput.value.length === 0) {
-                 passwordError.textContent = 'Please enter your password';
-                 return false;
-             }
- 
-             // Proceed to LoginServlet server side code
-             return true;
-         }
-     </script>
+        // Sample JSON data (replace this with your actual data)
+        var studyGroupData = [
+            {
+                "id": "1",
+                "course": "CS301",
+                "location": "SAL102",
+                "day": "Thursday",
+                "time": "2pm"
+            },
+            {
+                "id": "2",
+                "course": "MATH101",
+                "location": "Virtual",
+                "day": "Monday",
+                "time": "6pm"
+            }
+            // Add more study group data as needed
+        ];
+    
+        // Function to dynamically add study group data to the table
+        function joinStudyGroup(course) {
+            // Find the table body
+            var tableBody = document.getElementById("studyGroupTableBody");
+    
+            // Loop through the studyGroupData and add rows to the table
+            for (var i = 0; i < studyGroupData.length; i++) {
+                var group = studyGroupData[i];
+    
+                // Create a new row
+                var newRow = document.createElement("tr");
+    
+                // Add cells with data
+                var courseCell = document.createElement("td");
+                courseCell.textContent = group.course;
+                newRow.appendChild(courseCell);
+    
+                var locationCell = document.createElement("td");
+                locationCell.textContent = group.location;
+                newRow.appendChild(locationCell);
+    
+                var dayCell = document.createElement("td");
+                dayCell.textContent = group.day;
+                newRow.appendChild(dayCell);
+    
+                var timeCell = document.createElement("td");
+                timeCell.textContent = group.time;
+                newRow.appendChild(timeCell);
+    
+                var joinCell = document.createElement("td");
+                var joinButton = document.createElement("input");
+                joinButton.type = "button";
+                joinButton.className = "btn btn-primary";
+                joinButton.value = "Join!";
+                joinButton.onclick = function() {
+                    // Add your join functionality here
+                    alert("Joining study group for " + course);
+                };
+                joinCell.appendChild(joinButton);
+                newRow.appendChild(joinCell);
+    
+                // Append the new row to the table body
+                tableBody.appendChild(newRow);
+            }
+        }
+    
+        // Initial joinStudyGroup call with the existing static data
+        joinStudyGroup('CS201');
+    </script>
+    
+
+
+
+
+     
  
  
  </body>
