@@ -19,7 +19,7 @@ $(document).ready(loadReservations());
     
                 // Add cells with data
                 var courseCell = document.createElement("td");
-                courseCell.textContent = group.course;
+                courseCell.textContent = group.courseID;
                 newRow.appendChild(courseCell);
     
                 var locationCell = document.createElement("td");
