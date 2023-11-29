@@ -138,7 +138,7 @@ document.querySelector("#email-error").innerHTML = 'Enter a value for item.'
                     <h1 class="display-3">Log In</h1>
 
                     <!-- Form -->
-                    <form id="loginForm" action="LoginServlet" method="post" onsubmit="return validateForm()">
+                    <form id="loginForm" action="LoginServlet" method="get" onsubmit="return validateForm()">
                         <div class="form-group">
                             <label for="email">Email:</label>
                             <input type="email" class="form-control" id="email" name="email" placeholder="Enter @usc.edu email" required>

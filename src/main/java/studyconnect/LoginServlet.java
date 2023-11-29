@@ -49,7 +49,7 @@ public class LoginServlet extends HttpServlet {
 			System.out.println("Successful login");
 		}
 		
-		System.out.println("LoginServlet respone:" + result);
+		System.out.println("LoginServlet response:" + result);
 		PrintWriter out = response.getWriter();
 		out.print(result.toString());
 		//System.out.println("   email: " + email + "   password: " + password);

@@ -130,7 +130,11 @@
 				<tbody id="studyGroupTableBody">
 
                     <tr>
-
+                        <th>CS201</th>
+                        <th>Virtual</th>
+                        <th>Tuesday</th>
+                        <th>4pm</th>
+                        <th><input type="button" class="btn btn-primary" value="Join!" onclick="addStudyGroup(this)"/></th>
                     </tr>
 
 				</tbody>
@@ -173,7 +177,7 @@
         ];
     
         // Function to dynamically add study group data to the table
-        function joinStudyGroup(course) {
+        function addStudyGroup(course) {
             // Find the table body
             var tableBody = document.getElementById("studyGroupTableBody");
     
@@ -206,6 +210,7 @@
                 joinButton.type = "button";
                 joinButton.className = "btn btn-primary";
                 joinButton.value = "Join!";
+                joinButton.action = "/JoinStudyGroupServlet";
                 joinButton.onclick = function() {
                     // Add your join functionality here
                     alert("Joining study group for " + course);
@@ -219,15 +224,10 @@
         }
     
         // Initial joinStudyGroup call with the existing static data
-        joinStudyGroup('CS201');
+        addStudyGroup('CS201');
     </script>
+
     
-
-
-
-
-     
- 
  
  </body>
  </html>
