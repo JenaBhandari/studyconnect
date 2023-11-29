@@ -17,7 +17,7 @@ const dummyUser = {
   lastName: "Doe",
   phone: "1234567890",
   email: "jd@usc.edu",  
-  studyGroups:[dummygroup1,dummygroup1,dummygroup1],
+  studyGroups:[dummygroup1,dummygroup1,dummygroup1,dummygroup1,dummygroup1,dummygroup1],
   hostingGroups:[dummygroup1,dummygroup1],
 };
  
@@ -67,9 +67,10 @@ function displayhostingGroups(data){
 
 function displayGroups(inGroups,groups){
 	// loop through all the study groups:
+	inGroups.innerHTML = '';
 	const container = document.createElement("div");
 	inGroups.classList.add("container", "px-4");
-	container.classList.add("row","gx-5");
+	container.classList.add("row");
 	for(let i = 0; i < groups.length; i++){
 	  const currgroup = groups[i];
 		  
@@ -83,20 +84,28 @@ function displayGroups(inGroups,groups){
 	  group.appendChild(title);
 	  
 	  // Create delete button
-	  const deletebtn = document.createElement("input");
-	  deletebtn.type = "button";
-	  deletebtn.value = "---";
+	  const deletebtn = document.createElement("img");
+	  deletebtn.src = "img/delete_button.png";
 	  deletebtn.onclick = function(){deleteGroup(currgroup)};
 	  /*// TODO: Add Minus Sign; the following does not work somehow
+	  <button type="button" class="btn btn-danger">
+	  <i class="bi bi-dash"></i> <!-- Bootstrap Icons - Dash icon -->
+	  </button>
 	  const minus = document.createElement("span");
 	  minus.classList.add("bi", "bi-dash");
 	  deletebtn.appendChild(minus);*/
-	  deletebtn.classList.add("btn", "btn-small", "btn-primary", "float-right");
+	  deletebtn.classList.add("img-fluid", "float-right");
+	  deletebtn.style="max-height: 30px;"
+	  /*const minus = document.createElement("img");
+	  minus.src = "img/deletebutton.png";
+	  minus.classList.add("img-fluid");
+	  deletebtn.appendChild(minus);*/
 	  group.appendChild(deletebtn);
 	
 	  // Create and append meeting information
 	  const info1 = document.createElement("p");
 	  info1.textContent = `Meeting on ${currgroup.day} at ${currgroup.time}`;
+	  info1.classList.add("text-start"); 
 	  group.appendChild(info1);
 	
 	  // Create and append location information
@@ -104,7 +113,7 @@ function displayGroups(inGroups,groups){
 	  info2.textContent = `Location: ${currgroup.location}`;
 	  group.appendChild(info2);
 	  const container2 = document.createElement("div");
-	  container2.classList.add("col");
+	  container2.classList.add("col-md-4","mb-3");
 	  container2.appendChild(group);
 	
 	  // Append group to the container
@@ -122,4 +131,9 @@ window.onload = function() {
 function deleteGroup(group){
 	//TODO: requires JDBC function for delete
 	console.log(group);
+	//Refresh
+	// TODO: Fetch User Data: fetchUserProfile()	
+	displayUserProfile(dummyUser);
+	displayinGroups(dummyUser);
+	displayhostingGroups(dummyUser);
 }
