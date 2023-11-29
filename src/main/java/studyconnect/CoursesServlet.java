@@ -44,14 +44,19 @@ public class CoursesServlet extends HttpServlet {
 			
 			// Build JSON
 			//System.out.println(courses);
-			for(int i = 0;i<studyGroups.size();i++) {
+			/*for(int i = 0;i<studyGroups.size();i++) {
 				
-				responseJson = new Gson().toJson(studyGroups.get(i));
-				out.write(responseJson.toString());
+				responseJson = new Gson().toJson(studyGroups.get(i),StudyGroups.class);
+				out.write(responseJson);
 				out.flush();
-				System.out.println(responseJson.toString());
+				System.out.println(responseJson);
 			
-			}
+			}*/
+			responseJson = new Gson().toJson(studyGroups,ArrayList.class);
+			out.write(responseJson);
+			System.out.println(responseJson);
+			out.flush();
+			
 			
 				
 			// Output message to user

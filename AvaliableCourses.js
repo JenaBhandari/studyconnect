@@ -39,20 +39,19 @@ $(document).ready(loadReservations());
                 joinButton.type = "button";
                 joinButton.className = "btn btn-primary";
                 joinButton.value = "Join!";
-			 }
-			 joinCell.appendChild(joinButton);
+                joinCell.appendChild(joinButton);
              newRow.appendChild(joinCell);
     
                 // Append the new row to the table body
              tableBody.appendChild(newRow);
+			 }
+			 
 			 
 			 
 		 },
-		 error: function(message){
-			 console.log(message.responseText);
-			 
-			 
-		 }
+		 error: function(e){
+    	console.log(e.responseText);
+}
 		 
 		
 		 
