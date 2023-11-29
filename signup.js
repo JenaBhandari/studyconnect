@@ -4,7 +4,7 @@
 
 
 function validateAndSignUp() {
-	console.log("in valandlog");
+	console.log("in valandsign");
 		// Your validation logic here
 		if (validateForm()) {
 			SignUpUser();
