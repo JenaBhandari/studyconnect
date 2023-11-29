@@ -29,6 +29,26 @@ public class UserCoursesServlet extends HttpServlet {
 		// TO-DO: Add user's courses to Course database table
 	}
 
+
+	//TO-DO THIS METHOD
+	//userInfo:
+	//   {
+//   "studyPlace": "Zoom",
+//   "studyTime": "Morning",
+//   "phoneNumber": "1234567890",
+//   "classes": [
+//     {
+//       "className": "CSCI 102",
+//       "section": "001"
+//     },
+//     {
+//       "className": "CSCI 201",
+//       "section": "002"
+//     }
+//     // Add more class objects as needed
+//   ]
+// }
+// add classes for user in database
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
