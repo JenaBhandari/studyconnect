@@ -12,7 +12,7 @@ $(document).ready(loadReservations());
 		 success: function(response){
 			let tableBody = document.getElementById("studyGroupTableBody");
 			 for(let i = 0;i<response.length;i++){
-				var group = studyGroupData[i];
+				var group = response[i];
     
                 // Create a new row
                 var newRow = document.createElement("tr");
