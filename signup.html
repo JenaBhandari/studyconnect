@@ -151,7 +151,7 @@ document.querySelector("#email-error").innerHTML = 'Enter a value for item.'
                     <h1 class="display-3">Sign Up</h1>
 
                     <!-- Form -->
-                    <form id="signupForm" action="SignupServlet" method="post" onsubmit="return validateForm()">
+                    <form id="signupForm" action="SignupServlet" method="post" onsubmit="return validateAndSignUp()">
                         <div class="form-group">
                             <label for="firstName">First Name:</label>
                             <input type="text" class="form-control" id="firstName" name="firstName" required>
@@ -182,7 +182,7 @@ document.querySelector("#email-error").innerHTML = 'Enter a value for item.'
                             <small id="passwordError" class="form-text text-danger"></small>
                         </div>
 
-                        <input type="button" class="btn btn-primary" value="Sign Up" onclick="SignUpUser();"/>
+                        <input type="submit" class="btn btn-primary" value="Sign Up" onclick="SignUpUser();"/>
 
                     </form>
                 </div>
@@ -204,6 +204,20 @@ document.querySelector("#email-error").innerHTML = 'Enter a value for item.'
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
     <script>
+
+
+    function validateAndSignUp() {
+        console.log("in valandlog");
+            // Your validation logic here
+            if (validateForm()) {
+                SignUpUser();
+                return true; // Allow the form to be submitted
+            } else {
+                return false; // Prevent form submission if validation fails
+            }
+        }
+
+
         function validateForm() {
             // Validation logic for the form fields
             var firstNameInput = document.getElementById('firstName');
