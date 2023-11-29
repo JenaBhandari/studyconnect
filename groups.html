@@ -8,6 +8,7 @@
      <meta name="viewport" content="width=device-width, initial-scale=1">
      <!-- Bootstrap CSS -->
      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+     
      <style>
  
          /*
@@ -65,6 +66,7 @@
  
      </style>
      <script type="text/javascript" src="login.js"></script>
+     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
  </head>
  <body>
  
@@ -130,7 +132,11 @@
 				<tbody id="studyGroupTableBody">
 
                     <tr>
-
+						<th>CS201</th>
+                        <th>Virtual</th>
+                        <th>Tuesday</th>
+                        <th>4pm</th>
+                        <th><input type="button" class="btn btn-primary" value="Join!" onclick="addStudyGroup(this)"/></th>
                     </tr>
 
 				</tbody>
@@ -148,79 +154,11 @@
      </div>
  
      <!-- Bootstrap JS and Popper.js -->
-     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+     
      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
  
-     <script>
-        // Sample JSON data (replace this with your actual data)
-        var studyGroupData = [
-            {
-                "id": "1",
-                "course": "CS301",
-                "location": "SAL102",
-                "day": "Thursday",
-                "time": "2pm"
-            },
-            {
-                "id": "2",
-                "course": "MATH101",
-                "location": "Virtual",
-                "day": "Monday",
-                "time": "6pm"
-            }
-            // Add more study group data as needed
-        ];
-    
-        // Function to dynamically add study group data to the table
-        function joinStudyGroup(course) {
-            // Find the table body
-            var tableBody = document.getElementById("studyGroupTableBody");
-    
-            // Loop through the studyGroupData and add rows to the table
-            for (var i = 0; i < studyGroupData.length; i++) {
-                var group = studyGroupData[i];
-    
-                // Create a new row
-                var newRow = document.createElement("tr");
-    
-                // Add cells with data
-                var courseCell = document.createElement("td");
-                courseCell.textContent = group.course;
-                newRow.appendChild(courseCell);
-    
-                var locationCell = document.createElement("td");
-                locationCell.textContent = group.location;
-                newRow.appendChild(locationCell);
-    
-                var dayCell = document.createElement("td");
-                dayCell.textContent = group.day;
-                newRow.appendChild(dayCell);
-    
-                var timeCell = document.createElement("td");
-                timeCell.textContent = group.time;
-                newRow.appendChild(timeCell);
-    
-                var joinCell = document.createElement("td");
-                var joinButton = document.createElement("input");
-                joinButton.type = "button";
-                joinButton.className = "btn btn-primary";
-                joinButton.value = "Join!";
-                joinButton.onclick = function() {
-                    // Add your join functionality here
-                    alert("Joining study group for " + course);
-                };
-                joinCell.appendChild(joinButton);
-                newRow.appendChild(joinCell);
-    
-                // Append the new row to the table body
-                tableBody.appendChild(newRow);
-            }
-        }
-    
-        // Initial joinStudyGroup call with the existing static data
-        joinStudyGroup('CS201');
-    </script>
+     <script src = "AvaliableCourses.js"> </script>
     
 
 

@@ -1,4 +1,4 @@
-package studyconnect;
+
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -35,15 +35,25 @@ public class CoursesServlet extends HttpServlet {
 		String responseJson = "";
 		// Set response type to JSON
 		response.setContentType("application/json");
+		PrintWriter out = response.getWriter();
 		
 		ArrayList<String> courses = StudyConnectDB.getCourses();
+		System.out.println("kuricna");
+		
 		if (courses != null) {
 			// Build JSON
-			responseJson = new Gson().toJson(courses);
+			
+			for(int i = 0;i<courses.size();i++) {
+				StudyGroups  studyGroup = StudyConnectDB.getStudyGroup(Integer.parseInt(courses.get(i)));
+				responseJson = new Gson().toJson(studyGroup);
+				out.print(responseJson);
+			
+			}
+			
 				
 			// Output message to user
-			PrintWriter out = response.getWriter();
-			out.print(responseJson);
+			
+			
 			out.close();
 		}
 	}
