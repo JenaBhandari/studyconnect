@@ -8,6 +8,7 @@
      <meta name="viewport" content="width=device-width, initial-scale=1">
      <!-- Bootstrap CSS -->
      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+     
      <style>
  
          /*
@@ -27,6 +28,7 @@
  
          #option {
              background-color: #5A7D7C;
+/* 		border */
          }
  
          @font-face 
@@ -65,6 +67,7 @@
  
      </style>
      <script type="text/javascript" src="login.js"></script>
+     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
  </head>
  <body>
  
@@ -84,8 +87,11 @@
                          <a class="nav-link" href="home.html">StudyConnectHome<span class="sr-only">(current)</span></a>
                      </li>
                      <li class="nav-item">
-                         <a class="nav-link" href="login.html">LogIn</a>
+                         <a class="nav-link" href="home.html" onclick="localStorage.clear();" >Sign out</a>
                      </li>
+                     <li class="nav-item">
+                        <a class="nav-link" href="profile.html">Profile</a>
+                    </li>
                  </ul>
              </div>
          </nav>
@@ -113,28 +119,64 @@
                 </form>
             </div> <!-- .row -->
 
-             <div class="row col-12">
+            <div class="row col-12">
                  
                 <!-- Crate a table -->
 
-                <table class="table table-responsive table-striped col-12">
-				<thead>
-					<tr>
-						<th>Course</th>
-						<th>Location</th>
-						<th>Day</th>
-						<th>Time</th>
-                        <th>Join</th>
-					</tr>
-				</thead>
-				<tbody id="studyGroupTableBody">
+                <table class="table table-responsive table-striped col-8">
+                    <thead>
+                        <tr>
+                            <th>Course</th>
+                            <th>Location</th>
+                            <th>Day</th>
+                            <th>Time</th>
+                            <th>Join</th>
+                        </tr>
+                    </thead>
+                    <tbody id="studyGroupTableBody">
 
-                    <tr>
+                        <tr>
+                            <th>CS201</th>
+                            <th>Virtual</th>
+                            <th>Tuesday</th>
+                            <th>4pm</th>
+                            <th><input type="button" class="btn btn-primary" value="Join!" onclick="addStudyGroup(this)"/></th>
+                        </tr>
 
-                    </tr>
+                    </tbody>
+			    </table>
 
-				</tbody>
-			</table>
+                <div class="col-4">
+                    <!-- Create a button that says "Create a study group!" -->
+                    <button type="button" class="btn btn-success" onclick="toggleCreateForm()">Create a study group!</button>
+                
+                    <!-- Create a form for adding a study group (initially hidden) -->
+                    <form id="create-form" class="mt-4" style="display: none;">
+                        <div class="form-group">
+                            <label for="course-dropdown">Select a class:</label>
+                            <select required class="form-control" id="course-dropdown">
+                                <option value="">Select a class</option>
+                            </select>
+                        </div>
+                
+                        <div class="form-group">
+                            <label for="location">Location:</label>
+                            <input type="text" class="form-control" required id="location" placeholder="Enter location">
+                        </div>
+                
+                        <div class="form-group">
+                            <label for="day">Day:</label>
+                            <input type="text" class="form-control"required id="day" placeholder="Enter day">
+                        </div>
+                
+                        <div class="form-group">
+                            <label for="time">Time:</label>
+                            <input type="text" class="form-control" required id="time" placeholder="Enter time">
+                        </div>
+                
+                        <button type="button" class="btn btn-primary" onclick="createStudyGroup()">Submit</button>
+                    </form>
+                </div>
                  
              </div>
          </div>
@@ -148,86 +190,12 @@
      </div>
  
      <!-- Bootstrap JS and Popper.js -->
-     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+     
      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
  
-     <script>
-        // Sample JSON data (replace this with your actual data)
-        var studyGroupData = [
-            {
-                "id": "1",
-                "course": "CS301",
-                "location": "SAL102",
-                "day": "Thursday",
-                "time": "2pm"
-            },
-            {
-                "id": "2",
-                "course": "MATH101",
-                "location": "Virtual",
-                "day": "Monday",
-                "time": "6pm"
-            }
-            // Add more study group data as needed
-        ];
+     <script src = "AvaliableCourses.js"> </script>
     
-        // Function to dynamically add study group data to the table
-        function joinStudyGroup(course) {
-            // Find the table body
-            var tableBody = document.getElementById("studyGroupTableBody");
-    
-            // Loop through the studyGroupData and add rows to the table
-            for (var i = 0; i < studyGroupData.length; i++) {
-                var group = studyGroupData[i];
-    
-                // Create a new row
-                var newRow = document.createElement("tr");
-    
-                // Add cells with data
-                var courseCell = document.createElement("td");
-                courseCell.textContent = group.course;
-                newRow.appendChild(courseCell);
-    
-                var locationCell = document.createElement("td");
-                locationCell.textContent = group.location;
-                newRow.appendChild(locationCell);
-    
-                var dayCell = document.createElement("td");
-                dayCell.textContent = group.day;
-                newRow.appendChild(dayCell);
-    
-                var timeCell = document.createElement("td");
-                timeCell.textContent = group.time;
-                newRow.appendChild(timeCell);
-    
-                var joinCell = document.createElement("td");
-                var joinButton = document.createElement("input");
-                joinButton.type = "button";
-                joinButton.className = "btn btn-primary";
-                joinButton.value = "Join!";
-                joinButton.onclick = function() {
-                    // Add your join functionality here
-                    alert("Joining study group for " + course);
-                };
-                joinCell.appendChild(joinButton);
-                newRow.appendChild(joinCell);
-    
-                // Append the new row to the table body
-                tableBody.appendChild(newRow);
-            }
-        }
-    
-        // Initial joinStudyGroup call with the existing static data
-        joinStudyGroup('CS201');
-    </script>
-    
-
-
-
-
-     
- 
  
  </body>
  </html>

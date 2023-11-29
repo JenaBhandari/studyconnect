@@ -29,6 +29,29 @@ public class UserCoursesServlet extends HttpServlet {
 		// TO-DO: Add user's courses to Course database table
 	}
 
+//TO-DO, send a list of all the course names to info.html in this format when the info.html is opened
+// const classOptions = ["CSCI 102", "CSCI 103", "CSCI 104", "CSCI 356", "CSCI 201", "CSCI 270", "CSCI 170"];
+
+
+	//TO-DO THIS METHOD
+	//userInfo:
+	//   {
+//   "studyPlace": "Zoom",
+//   "studyTime": "Morning",
+//   "phoneNumber": "1234567890",
+//   "classes": [
+//     {
+//       "className": "CSCI 102",
+//       "section": "001"
+//     },
+//     {
+//       "className": "CSCI 201",
+//       "section": "002"
+//     }
+//     // Add more class objects as needed
+//   ]
+// }
+// add classes for user in database
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */

@@ -9,6 +9,11 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 public class StudyConnectDB {
+	
+	private static final String DB_URL = "jdbc:mysql://box5429.bluehost.com/gxsufkmy_201_db";
+	private static final String USER = "gxsufkmy_201_user";
+	private static final String PASS = "Mk!3J32S0b08xg&@";
+
 
 	// Returns all the courses from the Courses database table. If there's an error, return null
 	public static ArrayList<String> getCourses() {
@@ -212,7 +217,8 @@ public class StudyConnectDB {
 		Connection conn = null;
 		try {
 			// TO-DO: Add below
-			conn = DriverManager.getConnection("");
+			conn = DriverManager.getConnection(DB_URL, USER, PASS);
+			//conn = DriverManager.getConnection("jdbc:mysql://box5429.bluehost.com/gxsufkmy_201_db?user=gxsufkmy_201_user&password=Mk!3J32S0b08xg&@");
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
