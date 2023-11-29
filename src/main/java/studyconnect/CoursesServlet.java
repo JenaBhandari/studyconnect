@@ -1,4 +1,4 @@
-
+package studyconnect;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -39,14 +39,17 @@ public class CoursesServlet extends HttpServlet {
 		
 		ArrayList<String> courses = StudyConnectDB.getCourses();
 		System.out.println("kuricna");
-		
+		ArrayList<StudyGroups> studyGroups = StudyConnectDB.getStudyGroup(1);
 		if (courses != null) {
-			// Build JSON
 			
-			for(int i = 0;i<courses.size();i++) {
-				StudyGroups  studyGroup = StudyConnectDB.getStudyGroup(Integer.parseInt(courses.get(i)));
-				responseJson = new Gson().toJson(studyGroup);
-				out.print(responseJson);
+			// Build JSON
+			//System.out.println(courses);
+			for(int i = 0;i<studyGroups.size();i++) {
+				
+				responseJson = new Gson().toJson(studyGroups.get(i));
+				out.write(responseJson.toString());
+				out.flush();
+				System.out.println(responseJson.toString());
 			
 			}
 			
@@ -54,7 +57,7 @@ public class CoursesServlet extends HttpServlet {
 			// Output message to user
 			
 			
-			out.close();
+			//out.close();
 		}
 	}
 

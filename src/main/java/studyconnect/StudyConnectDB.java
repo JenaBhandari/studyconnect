@@ -86,8 +86,8 @@ public class StudyConnectDB {
 	
 	
 	// Retrieves study group information from the StudyGroups table from the database and creates a User object if a user with that email exists, otherwise returns null
-	public static StudyGroups getStudyGroup(int studyGroupID) {
-		String query = "SELECT * FROM StudyGroups WHERE StudyGroups.studyGroupID = \"" + studyGroupID + "\"";
+	public static ArrayList<StudyGroups> getStudyGroup(int studyGroupID) {
+		String query = "SELECT * FROM StudyGroups";
 		Connection conn = createConnection();
 		ResultSet rs = executeQuery(conn, query);
 		
@@ -95,17 +95,19 @@ public class StudyConnectDB {
 		if (rs == null) {
 			return null;
 		}
-		
+		ArrayList<StudyGroups> studyGroups = new ArrayList<StudyGroups>();
 		StudyGroups studyGroup = null;
 		
 		try {
-			if (rs.next()) {
+			while (rs.next()) {
 				// Study group with that studyGroupID is found
 				studyGroup = new StudyGroups();
+				studyGroup.setCourseID(rs.getString("courseID"));
 				studyGroup.setHostID((rs.getInt("hostID")));
 				studyGroup.setLocation(rs.getString("location"));
 				studyGroup.setTime(rs.getString("time"));
 				studyGroup.setDay(rs.getString("day"));
+				studyGroups.add(studyGroup);
 			}
 			
 			if (rs != null) {
@@ -118,7 +120,7 @@ public class StudyConnectDB {
 			System.out.println ("Exception: " + ex.getMessage());
 		}
 		
-		return studyGroup;
+		return studyGroups;
 	}
 	
 	// Adds a user to a study group in the StudyGroup database table
@@ -216,7 +218,7 @@ public class StudyConnectDB {
 	public static Connection createConnection() {
 		Connection conn = null;
 		try {
-			// TO-DO: Add below
+			Class.forName("com.mysql.cj.jdbc.Driver");
 			conn = DriverManager.getConnection(DB_URL, USER, PASS);
 			//conn = DriverManager.getConnection("jdbc:mysql://box5429.bluehost.com/gxsufkmy_201_db?user=gxsufkmy_201_user&password=Mk!3J32S0b08xg&@");
 		} catch (Exception ex) {
