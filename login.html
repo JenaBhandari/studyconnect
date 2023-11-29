@@ -138,7 +138,7 @@ document.querySelector("#email-error").innerHTML = 'Enter a value for item.'
                     <h1 class="display-3">Log In</h1>
 
                     <!-- Form -->
-                    <form id="loginForm" action="LoginServlet" method="get" onsubmit="return validateForm()">
+                    <form id="loginForm" action="LoginServlet" method="get" onsubmit="return validateAndLogIn()">
                         <div class="form-group">
                             <label for="email">Email:</label>
                             <input type="email" class="form-control" id="email" name="email" placeholder="Enter @usc.edu email" required>
@@ -151,7 +151,7 @@ document.querySelector("#email-error").innerHTML = 'Enter a value for item.'
                             <small id="passwordError" class="form-text text-danger"></small>
                         </div>
 
-                        <input type="button" class="btn btn-primary" value="Log In" onclick="LogInUser();"/>
+                        <button type="submit" value="Log In" class="btn btn-primary">Log In</button>
                         
                     </form>
                 </div>
@@ -173,6 +173,18 @@ document.querySelector("#email-error").innerHTML = 'Enter a value for item.'
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 	<script>
+
+    function validateAndLogIn() {
+        console.log("in valandlog");
+            // Your validation logic here
+            if (validateForm()) {
+                LogInUser();
+                return true; // Allow the form to be submitted
+            } else {
+                return false; // Prevent form submission if validation fails
+            }
+        }
+
         function validateForm() {
             var emailInput = document.getElementById('email');
             var passwordInput = document.getElementById('password');
