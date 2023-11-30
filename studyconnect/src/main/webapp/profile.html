@@ -66,6 +66,42 @@
 			margin-left: 40px;
 		}
 
+
+        #group-overlay 
+        {
+            display:none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+        }
+
+
+        #overlay-box 
+        {
+            width: 400px;
+            height: 500px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 600px;
+            position: relative;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+
     </style>
 </head>
 <body>
@@ -98,7 +134,7 @@
             <div class="row">
                 <!-- Left Column (7/12) -->
                 <div class="col-md-10 mt-3">
-                    <h1 class="display-3">PROFIrjngkjerfnkeLE</h1>
+                    <h1 class="display-3">PROFILE</h1>
                     <div class="lead subcontent" id="userprofile"></div>
                 </div>
                 <div class="col-md-10 mt-3">
@@ -114,6 +150,27 @@
 					<div id="hostGroups"></div>
                 </div>
             </div>
+
+
+            <div id="group-overlay" class="overlay">
+                <div id="overlay-box">
+                    <span class="close-btn" onclick="closeGroupOverlay()">&times;</span>
+                    <div id="overlay-content">
+                        <h2>the home</h2>
+                            <p><strong>Course:</strong> CSCI201</p>
+                            <p><strong>Location:</strong> Zoom</p>
+                            <p><strong>Time:</strong> 6pm</p>
+                            <p><strong>Day:</strong> Thursday</p>
+
+                            <h3>Contacts:</h3>
+                            <ul>
+                                <li>John Doe - 123-456-7890 - john.doe@example.com</li>
+                                <li>Jane Smith - 987-654-3210 - jane.smith@example.com</li>
+                            </ul>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
 

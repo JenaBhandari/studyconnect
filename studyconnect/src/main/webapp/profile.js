@@ -9,24 +9,56 @@ const dummygroup1 = {
 	groupname:"ABAAA",
 	location:"Zoom",
 	time:"6pm",
+	day:"Thursday", 
+	contacts: [
+        {
+            name: "The Host: John Doe",
+            phoneNumber: "123-456-7890",
+            email: "john.doe@example.com"
+        }
+	]
+}
+
+const dummyhostgroup1 = {
+	studyGroupID: "0",
+	course:"CSCI201",
+	groupname:"ABAAA",
+	location:"Zoom",
+	time:"6pm",
 	day:"Thursday",
+	contacts: [
+        {
+            name: "John Doe",
+            phoneNumber: "123-456-7890",
+            email: "john.doe@example.com"
+        },
+        {
+            name: "Jane Smith",
+            phoneNumber: "987-654-3210",
+            email: "jane.smith@example.com"
+        },
+
+    ]
 }
 
 const dummyUser = {
-  firstName: "John",
-  lastName: "Doe",
-  phone: "1234567890",
-  email: "jd@usc.edu",  
-  studyGroups:[dummygroup1,dummygroup1,dummygroup1,dummygroup1,dummygroup1,dummygroup1],
-  hostingGroups:[dummygroup1,dummygroup1],
-};
+	firstName: "John",
+	lastName: "Doe",
+	phone: "1234567890",
+	email: "jd@usc.edu",  
+	studyGroups:[dummygroup1,dummygroup1,dummygroup1,dummygroup1,dummygroup1,dummygroup1],
+	hostingGroups:[dummyhostgroup1,dummyhostgroup1],
+  };
+
+  
+const user = localStorage.getItem('email');
  
  function fetchUserProfile() {
     let baseURL = window.location.origin + "/studyconnect/";
     // TODO: need update with the correct backend endpoint 
     var url = new URL("user/profile", baseURL); 
     var params = {
-        //userID: 123
+        email: user,
     };
     url.search = new URLSearchParams(params).toString();
 
@@ -39,6 +71,8 @@ const dummyUser = {
         })
         .then(data => {
 			displayUserProfile(data);
+			displayinGroups(data);
+			displayhostingGroups(data)
             // Handle the retrieved user profile data
             console.log(data); // Access data.id, data.name, data.email, etc.
         })
@@ -117,7 +151,7 @@ function displayGroups(inGroups,groups){
 }
 window.onload = function() 
 {
-	// TODO: Fetch User Data: fetchUserProfile()	
+	// fetchUserProfile();	
 	displayUserProfile(dummyUser);
 	displayinGroups(dummyUser);
 	displayhostingGroups(dummyUser);
@@ -128,14 +162,61 @@ function deleteGroup(group){
 	console.log("in delete");
 	//TODO: requires JDBC function for delete
 	console.log(group);
+	let baseURL = window.location.origin + "/studyconnect/";
+    // TODO: need update with the correct backend endpoint 
+    var url = new URL("DeleteGroup", baseURL); 
+    var params = {
+        email: user,
+		groupid: group.studyGroupID,
+    };
+    url.search = new URLSearchParams(params).toString();
+
+    fetch(url)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok.');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log(data); // Access data.id, data.name, data.email, etc.
+        })
+        .catch(error => {
+            console.error('There has been a problem with your fetch operation:', error);
+        });
 	//Refresh
-	// TODO: Fetch User Data: fetchUserProfile()	
-	displayUserProfile(dummyUser);
-	displayinGroups(dummyUser);
-	displayhostingGroups(dummyUser);
+	fetchUserProfile()	
+	// displayUserProfile(dummyUser);
+	// displayinGroups(dummyUser);
+	// displayhostingGroups(dummyUser);
 }
 
-function showGroupOverlay(group)
+function showGroupOverlay(group) 
 {
-	console.log("in group overlay");
+    console.log("in show group overlay");
+    const overlay = document.getElementById('group-overlay');
+    const content = document.getElementById('overlay-content');
+	overlay.style.display = ('flex');
+
+    content.innerHTML = `
+        <h2>${group.groupname}</h2>
+        <p><strong>Course:</strong> ${group.course}</p>
+        <p><strong>Location:</strong> ${group.location}</p>
+        <p><strong>Time:</strong> ${group.time}</p>
+        <p><strong>Day:</strong> ${group.day}</p>
+        
+        <h3>Contacts:</h3>
+        <ul>
+            ${group.contacts.map(contact => `<li>${contact.name} - ${contact.phoneNumber} - ${contact.email}</li>`).join('')}
+        </ul>
+    `;
+
+    overlay.style.display = 'flex'; 
 }
+
+function closeGroupOverlay() {
+    const overlay = document.getElementById('group-overlay');
+    overlay.style.display = 'none';
+}
+
+
