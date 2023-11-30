@@ -1,5 +1,7 @@
 package studyconnect;
 
+import java.util.ArrayList;
+
 public class StudyGroups {
 	private int studyGroupID;
 	private String courseID;
@@ -7,7 +9,7 @@ public class StudyGroups {
 	private String location;
 	private String time;
 	private String day;
-	private String email;
+	private ArrayList<User> joinedUsers;
 
 
 	// Setters and getters
@@ -52,13 +54,8 @@ public class StudyGroups {
 	public void setDay(String day) {
 		this.day = day;
 	}
-	
-	public void setEmail(String email) {
-		this.email = email;	
-	}
-	
-	public String getEmail() {
-		return email;
+	public void addUsers(ArrayList<User> u) {
+		joinedUsers = u;
 	}
 
 	// Default Constructor
@@ -73,6 +70,8 @@ public class StudyGroups {
 		this.location = location;
 		this.time = time;
 		this.day = day;
+		joinedUsers = new ArrayList<User>();
+				
 	}
 	
 
