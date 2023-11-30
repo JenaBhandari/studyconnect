@@ -20,13 +20,15 @@ const dummyUser = {
   studyGroups:[dummygroup1,dummygroup1,dummygroup1,dummygroup1,dummygroup1,dummygroup1],
   hostingGroups:[dummygroup1,dummygroup1],
 };
+
+const user = localStorage.getItem('email');
  
  function fetchUserProfile() {
     let baseURL = window.location.origin + "/studyconnect/";
     // TODO: need update with the correct backend endpoint 
     var url = new URL("user/profile", baseURL); 
     var params = {
-        //userID: 123
+        email: user,
     };
     url.search = new URLSearchParams(params).toString();
 
@@ -39,6 +41,8 @@ const dummyUser = {
         })
         .then(data => {
 			displayUserProfile(data);
+			displayinGroups(data);
+			displayhostingGroups(data)
             // Handle the retrieved user profile data
             console.log(data); // Access data.id, data.name, data.email, etc.
         })
@@ -117,10 +121,10 @@ function displayGroups(inGroups,groups){
 }
 window.onload = function() 
 {
-	// TODO: Fetch User Data: fetchUserProfile()	
-	displayUserProfile(dummyUser);
-	displayinGroups(dummyUser);
-	displayhostingGroups(dummyUser);
+	fetchUserProfile();	
+	// displayUserProfile(dummyUser);
+	// displayinGroups(dummyUser);
+	// displayhostingGroups(dummyUser);
 	console.log("load");
 };
 
@@ -128,11 +132,33 @@ function deleteGroup(group){
 	console.log("in delete");
 	//TODO: requires JDBC function for delete
 	console.log(group);
+	let baseURL = window.location.origin + "/studyconnect/";
+    // TODO: need update with the correct backend endpoint 
+    var url = new URL("DeleteGroup", baseURL); 
+    var params = {
+        email: user,
+		groupid: group.studyGroupID,
+    };
+    url.search = new URLSearchParams(params).toString();
+
+    fetch(url)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok.');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log(data); // Access data.id, data.name, data.email, etc.
+        })
+        .catch(error => {
+            console.error('There has been a problem with your fetch operation:', error);
+        });
 	//Refresh
-	// TODO: Fetch User Data: fetchUserProfile()	
-	displayUserProfile(dummyUser);
-	displayinGroups(dummyUser);
-	displayhostingGroups(dummyUser);
+	fetchUserProfile()	
+	// displayUserProfile(dummyUser);
+	// displayinGroups(dummyUser);
+	// displayhostingGroups(dummyUser);
 }
 
 function showGroupOverlay(group)
