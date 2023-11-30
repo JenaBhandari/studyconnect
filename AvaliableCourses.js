@@ -11,6 +11,7 @@ $(document).ready(loadReservations());
 		 dataType: "json",
 		 success: function(response){
 			let tableBody = document.getElementById("studyGroupTableBody");
+			var buttons = [];
 			 for(let i = 0;i<response.length;i++){
 				var group = response[i];
     
@@ -20,6 +21,7 @@ $(document).ready(loadReservations());
                 // Add cells with data
                 var courseCell = document.createElement("td");
                 courseCell.textContent = group.courseID;
+                courseCell.id = group.studyGroupID;
                 newRow.appendChild(courseCell);
     
                 var locationCell = document.createElement("td");
@@ -36,14 +38,23 @@ $(document).ready(loadReservations());
     
                 var joinCell = document.createElement("td");
                 var joinButton = document.createElement("input");
+                
                 joinButton.type = "button";
+                
+                joinButton.classList.add("joinButton");
+              	buttons.push(joinButton);
+                joinButton.addEventListener('click',()=>joinStudyGroup(buttons[i]));
+                
                 joinButton.className = "btn btn-primary";
                 joinButton.value = "Join!";
+                
+                
                 joinCell.appendChild(joinButton);
              newRow.appendChild(joinCell);
     
                 // Append the new row to the table body
              tableBody.appendChild(newRow);
+             
 			 }
 			 
 			 
@@ -58,6 +69,16 @@ $(document).ready(loadReservations());
 	 });
 	 return false;
  }
+ document.addEventListener('DOMContentLoaded', function () {
+    // Find all elements with the class "joinButton" and attach a click event handler
+    document.querySelectorAll('.joinButton').forEach(function(button) {
+        // Pass the current button to joinStudyGroup
+        const clickHandler = joinStudyGroup(button);
+
+        // Attach the click event handler
+        button.addEventListener('click', clickHandler);
+    });
+});
  
 
  const classOptions = [
@@ -163,3 +184,33 @@ $(document).ready(loadReservations());
         // TO-DO: Add AJAX request to CreateStudyGroupServlet
         // ...
     }
+  function joinStudyGroup(event){
+	  
+	  let StudyGroupID = event.parentElement.parentElement.childNodes[0].id;
+	  let email = localStorage.get("email");
+	  
+	   $.ajax({
+		 
+		 type: "GET",
+		 url: "JoinStudyGroupServlet",
+		 dataType: "json",
+		 data:{
+			 studyGroupID: StudyGroupID,
+			 email: email 
+		 },
+		 success: function(response){
+	 		event.parentElement.parentElement.style.visibility = "none"
+		 },
+		 error: function(e){
+    	console.log(e.responseText);
+}
+		 
+		
+		 
+	 });
+	 return false;
+ }
+	  
+ 
+    
+    
