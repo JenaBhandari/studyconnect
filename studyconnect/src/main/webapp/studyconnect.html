@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Study Connect</title>
+  </head>
+  <body>
+    <form name="login" method="GET" action="LoginServlet">
+      <table>
+        <tr>
+          <td>Email</td>
+          <td><input type="email" name="email"  required/></td>
+        </tr>
+        <tr>
+          <td>Password</td>
+          <td><input type="password" name="password" pattern=".{6,}" title="Six or more characters" /></td>
+        </tr>
+        <tr>
+          <td colspan="1">
+            <input type="submit" name="submit" value="Login" />
+          </td>          
+        </tr>
+      </table>
+      
+    </form>
+    <form name="signup" method="GET" action="SignupServlet">
+      <table>
+		<tr>
+          <td>First Name</td>
+          <td><input type="text" name="firstName"  required/></td>
+        </tr>
+        <tr>
+          <td>Last Name</td>
+          <td><input type="text" name="lastName"  required/></td>
+        </tr>
+        <tr>
+          <td>Email</td>
+          <td><input type="email" name="email"  required/></td>
+        </tr>
+        <tr>
+          <td>Phone</td>
+          <td><input type="text" name="phone"  required/></td>
+        </tr>
+        <tr>
+          <td>Password</td>
+          <td><input type="password" name="password" pattern=".{6,}" title="Six or more characters" /></td>
+        </tr>
+        <tr>
+          <td>Confirm Password</td>
+          <td><input type="password" name="confirmPassword" pattern=".{6,}" title="Six or more characters" /></td>
+        </tr>
+        <tr>
+          <td colspan="1">
+            <input type="submit" name="submit" value="Signup" />
+          </td>          
+        </tr>
+      </table>
+      
+    </form>
+    <form name="createStudyGroup" method="GET" action="CreateStudyGroupServlet">
+      <table>
+        <tr>
+          <td>Class</td>
+          <td><input type="text" name="courseID"  required/></td>
+        </tr>
+        <tr>
+          <td>Host ID</td>
+          <td><input type="text" name="hostID"  required/></td>
+        </tr>
+        <tr>
+          <td>Day</td>
+          <td><input type="text" name="day"  required/></td>
+        </tr>
+        <tr>
+          <td>Time</td>
+          <td><input type="text" name="time"  required/></td>
+        </tr>
+        <tr>
+          <td>Location</td>
+          <td><input type="text" name="location"  required/></td>
+        </tr>
+        <tr>
+          <td colspan="1">
+            <input type="submit" name="submit" value="Create Study Group" />
+          </td>          
+        </tr>
+      </table>
+      
+    </form>
+    <form name="joinstudygroup" method="GET" action="JoinStudyGroupServlet">
+      <table>
+        <tr>
+          <td>Study Group ID</td>
+          <td><input type="text" name="studyGroupID"  required/></td>
+        </tr>
+        <tr>
+          <td>User ID</td>
+          <td><input type="text" name="userID" required/></td>
+        </tr>
+        <tr>
+          <td colspan="1">
+            <input type="submit" name="submit" value="Join Study Group" />
+          </td>          
+        </tr>
+      </table>
+      
+    </form>
+    </form>
+    <form name="courses" method="GET" action="CoursesServlet">
+      <table>
+        <tr>
+          <td colspan="1">
+            <input type="submit" name="submit" value="Get Courses" />
+          </td>          
+        </tr>
+      </table>
+      
+    </form>
+  </body>
+</html>

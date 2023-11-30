@@ -1,0 +1,205 @@
+<!-- 
+In this file, we will create a form that allows the user to login by entering their email and password. 
+
+
+Users table:
+CREATE TABLE Users (
+userID INT AUTO_INCREMENT PRIMARY KEY,
+firstName VARCHAR(50) NOT NULL,
+lastName VARCHAR(50) NOT NULL,
+email VARCHAR(255) UNIQUE NOT NULL,
+phone VARCHAR(12) UNIQUE NOT NULL, 
+password VARCHAR(255) NOT NULL
+);
+
+
+If they don't enter a USC email, we will display an error message "Enter in the format youremail@usc.edu", and the form won't be submitted
+If they don't enter a username, we will display an error message "Please enter your email", and the form won't be submitted
+If they don't enter an email, we will display an error message, "Please enter your password", and the form won't be submitted
+If the email and pass don't, we will display an error message "Email and password don't match, please try again", and the form won't be submitted
+We will validate these using the database table
+Error messages will be handled by changing a span tag thru javascript
+
+---------------------------------------------------------------------------------------------------------------------------------------
+ex: this is the enter email form input that would be placed within a form
+<div class="col-12 mt-2 col-sm-4 mt-sm-0">
+							<label for="email" class="sr-only">Enter your USC email:</label>
+
+							<input type="text" class="form-control" id="email" placeholder="ttrojan@usc.edu...">
+                            <small id="email-error" class="form-text text-danger"></small>
+
+</div> 
+
+this is the script that changes the #email-error message if the email length is 0:
+
+document.querySelector("#email-error").innerHTML = 'Enter a value for item.'
+---------------------------------------------------------------------------------------------------------------------------------------
+
+ -->
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Website Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+
+        /*
+
+        5A7D7C - dark green
+        F1F3FA - whitish color
+        232C33 - blackish color
+        A0C1D1 - light blue
+        B5B2C2 - purple
+
+        */
+
+        #landing {
+            background-color: #A0C1D1;
+            color: #232C33;
+        }
+
+        #option {
+            background-color: #5A7D7C;
+        }
+
+        @font-face 
+        {
+            font-family: 'JockeyOne';
+            src: url('fonts/Jockey_One/JockeyOne-Regular.ttf') format('truetype');
+        }
+
+
+        /* this applies the font to the entire body */
+        body 
+        {
+            font-family: 'JockeyOne', sans-serif; 
+        }
+
+        h1, h2, h3, p 
+        {
+            font-family: 'JockeyOne', sans-serif;
+        }
+
+        #footer
+        {
+            background-color: #B5B2C2;
+            color: #232C33;
+        }
+
+        /* navbar img original */
+        .navbar-brand img {
+            height: 40px;
+        }
+
+        /* for small screen */
+        @media (max-width: 1000px) {
+            
+        }
+
+    </style>
+    <script type="text/javascript" src="login.js"></script>
+</head>
+<body>
+
+    <div id="main" class="container-fluid">
+
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light col-12">
+            <a class="navbar-brand" href="home.html">
+                <img class="img-fluid navbar-brand" src="img/groupwithbook.png" alt="group with book picture">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse col-11" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="home.html">StudyConnectHome<span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="login.html">LogIn</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        
+
+        <!-- Landing Section -->
+        <div id="landing" class="container-fluid vh-100 d-flex align-items-center justify-content-center">
+            <div class="row">
+				
+                <div class="text-center">
+                    <h1 class="display-3">Log In</h1>
+
+                    <!-- Form -->
+                    <form id="loginForm" action="LoginServlet" method="post" onsubmit="return validateForm()">
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Enter @usc.edu email" required>
+                            <small id="emailError" class="form-text text-danger"></small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password">Password:</label>
+                            <input type="password" class="form-control" id="password" name="password" required>
+                            <small id="passwordError" class="form-text text-danger"></small>
+                        </div>
+
+                        <input type="button" class="btn btn-primary" value="Log In" onclick="LogInUser();"/>
+                        
+                    </form>
+                </div>
+                
+            </div>
+        </div>
+
+        <!-- Footer Section -->
+        <div id="footer" class="text-center py-2">
+            <p>CSCI 201 Project - Group 15</p>
+        </div>
+
+
+    </div>
+
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+	<script>
+        function validateForm() {
+            var emailInput = document.getElementById('email');
+            var passwordInput = document.getElementById('password');
+            var emailError = document.getElementById('emailError');
+            var passwordError = document.getElementById('passwordError');
+
+            // Reset errors
+            emailError.textContent = '';
+            passwordError.textContent = '';
+
+            // Validation logic for email
+            if (!emailInput.value.endsWith('usc.edu')) {
+                emailError.textContent = 'Enter a valid USC email (e.g., youremail@usc.edu)';
+                return false;
+            }
+
+            // Validation logic for password (add more if needed)
+            if (passwordInput.value.length === 0) {
+                passwordError.textContent = 'Please enter your password';
+                return false;
+            }
+
+            // Proceed to LoginServlet server side code
+            return true;
+        }
+    </script>
+
+
+</body>
+</html>

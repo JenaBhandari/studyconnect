@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Your website title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+  <style>
+
+    /*
+
+    5A7D7C - dark green
+    F1F3FA - whitish color
+    232C33 - blackish color
+    A0C1D1 - light blue
+    B5B2C2 - purple
+
+    */
+
+
+    #landing {
+      background-color: #A0C1D1;
+      color: #232C33;
+    }
+
+    #option {
+      background-color: #5A7D7C;
+    }
+
+    @font-face
+    {
+      font-family: 'JockeyOne';
+      src: url('fonts/Jockey_One/JockeyOne-Regular.ttf') format('truetype');
+    }
+
+    /* this applies the font to the entire body */
+    body
+    {
+      font-family: 'JockeyOne', sans-serif;
+    }
+
+    h1, h2, h3, p
+    {
+      font-family: 'JockeyOne', sans-serif;
+    }
+
+    #footer
+    {
+      background-color: #B5B2C2;
+      color: #232C33;
+    }
+
+    /* navbar img original */
+    .navbar-brand img {
+      height: 40px;
+    }
+
+    /* for small screen */
+    @media (max-width: 1000px) {
+
+    }
+    .class-box {
+      border: 1px solid #232C33;
+      margin: 10px;
+      padding: 15px;
+      color: #232C33;
+      width: 200pt;
+      background-color: #b7b2c0;
+    }
+
+    label{
+      font-size: 15pt;
+    }
+    .btn-custom {
+      background-color: #5A7D7C;
+      color: #FFFFFF;
+      border: 2px solid #232C33;
+    }
+
+
+
+  </style>
+</head>
+<body>
+<div id="main" class="container-fluid">
+
+  <nav class="navbar navbar-expand-lg navbar-light bg-light col-12">
+    <a class="navbar-brand" href="home.html">
+      <img class="img-fluid navbar-brand" src="img/groupwithbook.png" alt="group with book picture">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse col-11" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item active">
+          <a class="nav-link" href="home.html">StudyConnectHome<span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="login.html">LogIn</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <div id="landing" class="container-fluid vh-100">
+    <div class="row">
+      <div class="col-md-7 mt-3">
+        <h1 class="display-3">Classes:</h1>
+        <div id="class-container"></div>
+        <div class="form-group">
+          <label for="className">Class Name:</label>
+          <select id="className" >
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="section">Section:</label>
+          <input type="text" id="section" >
+        </div>
+        <button id="addClassBtn" class="btn btn-custom mt-3">Add Class</button>
+      </div>
+      <div class="col-md-5 mt-3">
+        <div>
+        <h1 class="display-3 text-right col-md-7 mt-3">Information:</h1>
+        <label for="studyPlace" class = " display- 3 col-md-7 mt-3">Where would you like to study?</label>
+        <select id="studyPlace">
+          <option value="Zoom">Zoom</option>
+          <option value="On Campus">On Campus</option>
+        </select>
+        <label for="studyTime" class = " display- 3 col-md-7 mt-3">When would you like to study?</label>
+        <select id="studyTime">
+          <option value="Morning">Morning</option>
+          <option value="Afternoon">Afternoon</option>
+          <option value="Night">Night</option>
+        </select>
+        </div>
+        <!-- Add any additional information here -->
+      </div>
+    </div>
+    <button id="submit" class="col-md-5 mt-5 btn btn-custom btn-lg mx-auto d-block mb-2">Submit</button>
+
+  </div>
+
+</div>
+
+
+</body>
+</html>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const classOptions = ["CSCI 102", "CSCI 103", "CSCI 104", "CSCI 356", "CSCI 201", "CSCI 270", "CSCI 170"];
+
+    // Populate options for the class dropdown
+    const classNameSelect = document.getElementById("className");
+    classOptions.forEach(function (classOption) {
+      const option = document.createElement("option");
+      option.value = classOption;
+      option.textContent = classOption;
+      classNameSelect.appendChild(option);
+    });
+
+    // Function to create a new class box
+    function createClassBox(className, section) {
+      const classContainer = document.getElementById("class-container");
+
+      // Create a new div for the class box
+      const classBox = document.createElement("div");
+      classBox.classList.add("class-box");
+
+      // Display class name and section in the class box
+      classBox.innerHTML = `<p><strong>Class Name:</strong> ${className}</p><p><strong>Section:</strong> ${section}</p>`;
+
+      // Add a button to remove the class box
+      const removeBtn = document.createElement("button");
+      removeBtn.classList.add("btn", "btn-danger", "mt-2");
+      removeBtn.textContent = "Remove Class";
+      removeBtn.addEventListener("click", function () {
+        // Remove the class box when the button is clicked
+        classContainer.removeChild(classBox);
+      });
+
+      classBox.appendChild(removeBtn);
+
+      // Append the class box to the container
+      classContainer.appendChild(classBox);
+    }
+
+    // Event listener for the "Add Class" button
+    document.getElementById("addClassBtn").addEventListener("click", function () {
+      // Get values from input fields
+      const className = document.getElementById("className").value;
+      const section = document.getElementById("section").value;
+
+      // Create a new class box with the entered values
+      createClassBox(className, section);
+    });
+  });
+</script>
