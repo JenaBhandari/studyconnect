@@ -84,6 +84,80 @@ public class StudyConnectDB {
 		return user;
 	}
 	
+	public static String getEmail(int userID) {
+		String query = "SELECT * FROM Users WHERE Users.userID = \"" + userID + "\"";
+		Connection conn = createConnection();
+		ResultSet rs = executeQuery(conn, query);
+		
+		// If null, no ResultSet due to error
+		if (rs == null) {
+			return null;
+		}
+		
+//		User user = null;
+		String email = null;
+		
+		try {
+			if (rs.next()) {
+				// User with that email is found
+//				user = new User();
+//				user.setUserID((rs.getInt("userID")));
+//				user.setEmail(rs.getString("email"));
+				email = rs.getString("email");
+//				user.setPhone(rs.getString("phone"));
+//				user.setPassword(rs.getString("password"));
+			}
+			
+			if (rs != null) {
+				rs.close();
+			}
+			if (conn != null) {
+				conn.close();
+			}
+		} catch (Exception ex) {
+			System.out.println ("Exception: " + ex.getMessage());
+		}
+		
+		return email;
+	}
+	
+	public static int getUserID(String email) {
+		String query = "SELECT * FROM Users WHERE Users.email = \"" + email + "\"";
+		Connection conn = createConnection();
+		ResultSet rs = executeQuery(conn, query);
+		
+		// If null, no ResultSet due to error
+		if (rs == null) {
+			return -1;
+		}
+		
+//		User user = null;
+		int userID = 0;
+		
+		try {
+			if (rs.next()) {
+				// User with that email is found
+//				user = new User();
+//				user.setUserID((rs.getInt("userID")));
+//				user.setEmail(rs.getString("email"));
+				userID = rs.getInt("userID");
+//				user.setPhone(rs.getString("phone"));
+//				user.setPassword(rs.getString("password"));
+			}
+			
+			if (rs != null) {
+				rs.close();
+			}
+			if (conn != null) {
+				conn.close();
+			}
+		} catch (Exception ex) {
+			System.out.println ("Exception: " + ex.getMessage());
+		}
+		
+		return userID;
+	}
+	
 	
 	// Retrieves study group information from the StudyGroups table from the database and creates a User object if a user with that email exists, otherwise returns null
 	public static ArrayList<StudyGroups> getStudyGroup(int studyGroupID) {
@@ -100,6 +174,9 @@ public class StudyConnectDB {
 		
 		try {
 			while (rs.next()) {
+				// Getting user email
+				String email = StudyConnectDB.getEmail(rs.getInt("hostID"));
+				
 				// Study group with that studyGroupID is found
 				studyGroup = new StudyGroups();
 				studyGroup.setCourseID(rs.getString("courseID"));
@@ -107,6 +184,7 @@ public class StudyConnectDB {
 				studyGroup.setLocation(rs.getString("location"));
 				studyGroup.setTime(rs.getString("time"));
 				studyGroup.setDay(rs.getString("day"));
+				studyGroup.setEmail(email);
 				studyGroups.add(studyGroup);
 			}
 			
@@ -122,6 +200,156 @@ public class StudyConnectDB {
 		
 		return studyGroups;
 	}
+	
+	public static StudyGroups getGroup(int studyGroupID) {
+		String query = "SELECT * FROM StudyGroups WHERE StudyGroups.studyGroupID=" + studyGroupID;
+		Connection conn = createConnection();
+		ResultSet rs = executeQuery(conn, query);
+		
+		// If null, no ResultSet due to error
+		if (rs == null) {
+			return null;
+		}
+		StudyGroups studyGroup = null;
+		
+		try {
+			while (rs.next()) {
+				// Getting user email
+				String email = StudyConnectDB.getEmail(rs.getInt("hostID"));
+				
+				// Study group with that studyGroupID is found
+				studyGroup = new StudyGroups();
+				studyGroup.setCourseID(rs.getString("courseID"));
+				studyGroup.setHostID((rs.getInt("hostID")));
+				studyGroup.setLocation(rs.getString("location"));
+				studyGroup.setTime(rs.getString("time"));
+				studyGroup.setDay(rs.getString("day"));
+				studyGroup.setEmail(email);
+				
+			}
+			
+			if (rs != null) {
+				rs.close();
+			}
+			if (conn != null) {
+				conn.close();
+			}
+		} catch (Exception ex) {
+			System.out.println ("Exception: " + ex.getMessage());
+		}
+		
+		return studyGroup;
+	}
+	
+public static int getLastStudyGroupID() {
+		
+		String query = "SELECT MAX(studyGroupID) AS studyGroupID FROM StudyGroups";
+		System.out.println("executing query: " + query);
+		Connection conn = createConnection();
+		ResultSet rs = executeQuery(conn, query);
+		int studyGroupID = 0;
+		
+		try {
+			if (rs.next()) {
+				studyGroupID = rs.getInt("studyGroupID");
+				System.out.println(studyGroupID);
+			}
+			
+			if (rs != null) {
+				rs.close();
+			}
+			if (conn != null) {
+				conn.close();
+			}
+		} catch (Exception ex) {
+			System.out.println ("Exception: " + ex.getMessage());
+		}
+		
+		return studyGroupID;
+	}
+	
+	public static ArrayList<StudyGroups> getJoinedGroups(int userID) {
+		String query = "SELECT * FROM StudyGroup WHERE StudyGroup.userID=" + userID;
+		Connection conn = createConnection();
+		ResultSet rs = executeQuery(conn, query);
+		
+		// If null, no ResultSet due to error
+		if (rs == null) {
+			return null;
+		}
+		
+		ArrayList<StudyGroups> studyGroupsList = new ArrayList<StudyGroups>();
+		//StudyGroup group = null;
+		
+		try {
+			while (rs.next()) {
+				// Study group with that studyGroupID is found
+				
+				//int user = rs.getInt("userID");	
+				//group = new StudyGroup(groupID, user);
+				StudyGroups studyGroup = getGroup(rs.getInt("studyGroupID"));
+				
+				studyGroupsList.add(studyGroup);
+				
+			}
+			
+			if (rs != null) {
+				rs.close();
+			}
+			if (conn != null) {
+				conn.close();
+			}
+		} catch (Exception ex) {
+			System.out.println ("Exception: " + ex.getMessage());
+		}
+		
+		return studyGroupsList;
+	}
+	
+	// Retrieves all of a user's hosted study group information from the StudyGroups table from the database
+	public static ArrayList<StudyGroups> getHostedGroups(int userID) {
+		String query = "SELECT * FROM StudyGroups WHERE StudyGroups.hostID=" + userID;
+		Connection conn = createConnection();
+		ResultSet rs = executeQuery(conn, query);
+		
+		// If null, no ResultSet due to error
+		if (rs == null) {
+			return null;
+		}
+		
+		ArrayList<StudyGroups> studyGroups = new ArrayList<StudyGroups>();
+		StudyGroups studyGroup = null;
+		
+		try {
+			while (rs.next()) {
+				// Getting user email
+				String email = StudyConnectDB.getEmail(rs.getInt("hostID"));
+				
+				// Study group with that studyGroupID is found
+				studyGroup = new StudyGroups();
+				studyGroup.setCourseID(rs.getString("courseID"));
+				studyGroup.setHostID((rs.getInt("hostID")));
+				studyGroup.setLocation(rs.getString("location"));
+				studyGroup.setTime(rs.getString("time"));
+				studyGroup.setDay(rs.getString("day"));
+				studyGroup.setEmail(email);
+				studyGroups.add(studyGroup);
+			}
+			
+			if (rs != null) {
+				rs.close();
+			}
+			if (conn != null) {
+				conn.close();
+			}
+		} catch (Exception ex) {
+			System.out.println ("Exception: " + ex.getMessage());
+		}
+		
+		return studyGroups;
+	}
+	
+	
 	
 	// Adds a user to a study group in the StudyGroup database table
 	public static boolean addUserToStudyGroup(int studyGroupID, int userID) {
@@ -140,7 +368,7 @@ public class StudyConnectDB {
 	}
 	
 	// Adds a course that a user is taking to the Course database table
-	public static boolean addUsersCourses(int courseID, int userID) {
+	public static boolean addUsersCourses(String courseID, int userID) {
 		String query = "INSERT INTO Course (courseID, userID) VALUES (\"" + courseID + "\", \"" + userID + "\")";
 		System.out.println("executing query: " + query);
 		Connection conn = createConnection();
@@ -185,6 +413,40 @@ public class StudyConnectDB {
 		return res;
 	}
 	
+	public static boolean deleteHostedGroup(int studyGroupID) {
+		String query = "DELETE * FROM StudyGroups WHERE StudyGroups.studyGroupID=" + studyGroupID;
+		System.out.println("executing query: " + query);
+		Connection conn = createConnection();
+		boolean res = executeUpdate(conn, query); // Returns true if successfully added, false otherwise
+		try {
+	 	 conn.close();
+   	    } catch (Exception ex) {
+   	    	
+		}
+		String query2 = "DELETE * FROM StudyGroup WHERE StudyGroup.studyGroupID=" + studyGroupID;
+		System.out.println("executing query: " + query2);
+		Connection conn2 = createConnection();
+		boolean res2 = executeUpdate(conn, query); // Returns true if successfully added, false otherwise
+		try {
+	 	 conn2.close();
+   	    } catch (Exception ex) {
+   	    	
+		}
+		return res;
+	}
+	
+	public static boolean leaveStudyGroup(int studyGroupID, int userID) {
+		String query = "DELETE * FROM StudyGroup WHERE StudyGroup.userID=" + userID;
+		System.out.println("executing query: " + query);
+		Connection conn = createConnection();
+		boolean res = executeUpdate(conn, query); // Returns true if successfully added, false otherwise
+		try {
+	 	 conn.close();
+   	    } catch (Exception ex) {
+   	    	
+		}
+		return res;
+	}
 	
 	// Executes an sql query. If successful, it returns the ResultSet otherwise it returns null.
 	public static ResultSet executeQuery(Connection conn, String sqlQuery) {
