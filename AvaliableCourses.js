@@ -187,7 +187,7 @@ $(document).ready(loadReservations());
   function joinStudyGroup(event){
 	  
 	  let StudyGroupID = event.parentElement.parentElement.childNodes[0].id;
-	  let email = localStorage.get("email");
+	  let email = localStorage.getItem("email");
 	  
 	   $.ajax({
 		 
