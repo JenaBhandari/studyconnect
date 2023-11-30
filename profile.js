@@ -66,6 +66,8 @@ function displayhostingGroups(data){
 }
 
 function displayGroups(inGroups,groups){
+	
+	console.log("in display groups");
 	// loop through all the study groups:
 	inGroups.innerHTML = '';
 	const container = document.createElement("div");
@@ -76,6 +78,7 @@ function displayGroups(inGroups,groups){
 		  
 	  // Create group container
 	  const group = document.createElement("div");
+	  group.onclick = function(){showGroupOverlay(currgroup)};
 	  group.classList.add("rounded", "p-3", "bg-light", "border-5");
 	  
 	  // Create and append group title
@@ -87,19 +90,10 @@ function displayGroups(inGroups,groups){
 	  const deletebtn = document.createElement("img");
 	  deletebtn.src = "img/delete_button.png";
 	  deletebtn.onclick = function(){deleteGroup(currgroup)};
-	  /*// TODO: Add Minus Sign; the following does not work somehow
-	  <button type="button" class="btn btn-danger">
-	  <i class="bi bi-dash"></i> <!-- Bootstrap Icons - Dash icon -->
-	  </button>
-	  const minus = document.createElement("span");
-	  minus.classList.add("bi", "bi-dash");
-	  deletebtn.appendChild(minus);*/
+
 	  deletebtn.classList.add("img-fluid", "float-right");
 	  deletebtn.style="max-height: 30px;"
-	  /*const minus = document.createElement("img");
-	  minus.src = "img/deletebutton.png";
-	  minus.classList.add("img-fluid");
-	  deletebtn.appendChild(minus);*/
+
 	  group.appendChild(deletebtn);
 	
 	  // Create and append meeting information
@@ -121,14 +115,17 @@ function displayGroups(inGroups,groups){
 	}
 	inGroups.appendChild(container);
 }
-window.onload = function() {
+window.onload = function() 
+{
 	// TODO: Fetch User Data: fetchUserProfile()	
 	displayUserProfile(dummyUser);
 	displayinGroups(dummyUser);
 	displayhostingGroups(dummyUser);
+	console.log("load");
 };
 
 function deleteGroup(group){
+	console.log("in delete");
 	//TODO: requires JDBC function for delete
 	console.log(group);
 	//Refresh
@@ -136,4 +133,9 @@ function deleteGroup(group){
 	displayUserProfile(dummyUser);
 	displayinGroups(dummyUser);
 	displayhostingGroups(dummyUser);
+}
+
+function showGroupOverlay(group)
+{
+	console.log("in group overlay");
 }
