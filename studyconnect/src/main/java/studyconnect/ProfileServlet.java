@@ -47,12 +47,22 @@ public class ProfileServlet extends HttpServlet {
 		ArrayList<StudyGroups> hostGroups = StudyConnectDB.getHostedGroups(StudyConnectDB.getUserID(email));
 		ArrayList<StudyGroups> inGroups = StudyConnectDB.getJoinedGroups(StudyConnectDB.getUserID(email));
 		
+		
+		
 		System.out.println("moze");
 		if(type.equals("joined")) {
+			for(int i = 0;i<inGroups.size();i++) {
+				ArrayList<User> temp = StudyConnectDB.getUsersforStudyGroup(inGroups.get(i).getStudyGroupID());
+				inGroups.get(i).addUsers(temp);
+				System.out.println(temp.get(0));
+			}
 			responseJson = new Gson().toJson(inGroups,ArrayList.class);
 		}
 		else if(type.equals("host")) {
 			responseJson = new Gson().toJson(hostGroups,ArrayList.class);
+		}
+		else if(type.equals("user")) {
+			responseJson = new Gson().toJson(userprofile,User.class);
 		}
 			
 		

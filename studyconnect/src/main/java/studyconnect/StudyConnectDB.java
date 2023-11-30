@@ -66,6 +66,8 @@ public class StudyConnectDB {
 				// User with that email is found
 				user = new User();
 				user.setUserID((rs.getInt("userID")));
+				user.setFirstName(rs.getString("firstName"));
+				user.setLastName(rs.getString("lastName"));
 				user.setEmail(rs.getString("email"));
 				user.setPhone(rs.getString("phone"));
 				user.setPassword(rs.getString("password"));
@@ -199,6 +201,43 @@ public class StudyConnectDB {
 		}
 		
 		return studyGroups;
+	}
+	
+	public static ArrayList<User> getUsersforStudyGroup(int studyGroupID) {
+		String query = "SELECT * FROM StudyGroup WHERE studyGroupID =\""+studyGroupID+"\"";
+		Connection conn = createConnection();
+		ResultSet rs = executeQuery(conn, query);
+		
+		// If null, no ResultSet due to error
+		if (rs == null) {
+			return null;
+		}
+		ArrayList<User> users = new ArrayList<User>();
+		User user = null;
+		
+		try {
+			while (rs.next()) {
+				// Getting user email
+				user = getUser(getEmail(rs.getInt("userID")));
+				
+				// Study group with that studyGroupID is found
+				
+				
+				//studyGroup.setEmail(email);
+				users.add(user);
+			}
+			
+			if (rs != null) {
+				rs.close();
+			}
+			if (conn != null) {
+				conn.close();
+			}
+		} catch (Exception ex) {
+			System.out.println ("Exception: " + ex.getMessage());
+		}
+		
+		return users;
 	}
 	
 	public static StudyGroups getGroup(int studyGroupID) {

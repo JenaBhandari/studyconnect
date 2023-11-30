@@ -47,12 +47,30 @@ const dummyUser = {
         });
 }
 
-function displayUserProfile(data){
-	const profile = document.getElementById("userprofile");
-	profile.innerHTML = `
-    <p>Name: ${data.firstName} ${data.lastName}</p>
-    <p>Phone Number: ${data.phone}</p>
-    <p>Email: ${data.email}</p> `;	
+function displayUserProfile(email){
+	
+    
+    
+    $.ajax({
+		 
+		 type: "GET",
+		 url: "ProfileServlet",
+		 dataType: "json",
+		 data:{
+			 email: email,
+			 type: "user"
+		 },
+		 success: function(response){
+			 const profile = document.getElementById("userprofile");
+			profile.innerHTML = `
+    		<p>Name: ${response.firstName} ${response.lastName}</p>
+    		<p>Phone Number: ${response.phone}</p>
+    		<p>Email: ${response.email}</p> `;	
+		},
+		error:function(e){
+			console.log(e);
+		}
+		});
 }
 function displayinGroups(email,type){
 	const inGroups = document.getElementById("inGroups");
@@ -140,9 +158,9 @@ function displayGroups(inGroups,email,type){
 window.onload = function() 
 {
 	// TODO: Fetch User Data: fetchUserProfile()	
-	displayUserProfile(dummyUser);
-	displayinGroups("blaydin6@usc.edu","joined");
-	displayhostingGroups("blaydin6@usc.edu","host");
+	displayUserProfile(localStorage.getItem("email"));
+	displayinGroups(localStorage.getItem("email"));
+	displayhostingGroups(localStorage.getItem("email"),"host"); 
 	console.log("load");
 };
 
@@ -172,9 +190,13 @@ function showGroupOverlay(group)
         
         <h3>Contacts:</h3>
         <ul>
-            ${group.contacts.map(contact => `<li>${contact.name} - ${contact.phoneNumber} - ${contact.email}</li>`).join('')}
-        </ul>
     `;
+    for(let i = 0;i<group.joinedUsers.length;i++){
+		
+      content.innerHTML += `<li>${group.joinedUsers[i].firstName} - ${group.joinedUsers[i].phone} - ${group.joinedUsers[i].email}</li>`;
+        
+	}
+	content.innerHTML += '</ul>'
     overlay.style.display = 'flex'; 
 }
 function closeGroupOverlay() {
