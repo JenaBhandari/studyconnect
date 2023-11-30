@@ -20,15 +20,13 @@ const dummyUser = {
   studyGroups:[dummygroup1,dummygroup1,dummygroup1,dummygroup1,dummygroup1,dummygroup1],
   hostingGroups:[dummygroup1,dummygroup1],
 };
-
-const user = localStorage.getItem('email');
  
  function fetchUserProfile() {
     let baseURL = window.location.origin + "/studyconnect/";
     // TODO: need update with the correct backend endpoint 
     var url = new URL("user/profile", baseURL); 
     var params = {
-        email: user,
+        //userID: 123
     };
     url.search = new URLSearchParams(params).toString();
 
@@ -41,8 +39,6 @@ const user = localStorage.getItem('email');
         })
         .then(data => {
 			displayUserProfile(data);
-			displayinGroups(data);
-			displayhostingGroups(data)
             // Handle the retrieved user profile data
             console.log(data); // Access data.id, data.name, data.email, etc.
         })
@@ -58,25 +54,38 @@ function displayUserProfile(data){
     <p>Phone Number: ${data.phone}</p>
     <p>Email: ${data.email}</p> `;	
 }
-function displayinGroups(data){
+function displayinGroups(email,type){
 	const inGroups = document.getElementById("inGroups");
-	const groups = data.studyGroups;
-	displayGroups(inGroups, groups);	
+
+	displayGroups(inGroups,email,type);	
 }
-function displayhostingGroups(data){
+function displayhostingGroups(email,type){
 	const inGroups = document.getElementById("hostGroups");
-	const groups = data.hostingGroups;
-	displayGroups(inGroups, groups);	
+	
+	displayGroups(inGroups,email,type);	
 }
 
-function displayGroups(inGroups,groups){
+function displayGroups(inGroups,email,type){
 	
 	console.log("in display groups");
 	// loop through all the study groups:
-	inGroups.innerHTML = '';
+	
+	$.ajax({
+		 
+		 type: "GET",
+		 url: "ProfileServlet",
+		 dataType: "json",
+		 data:{
+			 email: email,
+			 type: type
+		 },
+		 success: function(response){
+			 console.log(response);
+	 		inGroups.innerHTML = '';
 	const container = document.createElement("div");
 	inGroups.classList.add("container", "px-4");
 	container.classList.add("row");
+	let groups =  response;
 	for(let i = 0; i < groups.length; i++){
 	  const currgroup = groups[i];
 		  
@@ -87,7 +96,7 @@ function displayGroups(inGroups,groups){
 	  
 	  // Create and append group title
 	  const title = document.createElement("h3");
-	  title.textContent = `Group for ${currgroup.course} - ${currgroup.groupname}`;
+	  title.textContent = `Group for ${currgroup.courseID} - ${currgroup.studyGroupID}`;
 	  group.appendChild(title);
 	  
 	  // Create delete button
@@ -118,13 +127,22 @@ function displayGroups(inGroups,groups){
 	  container.appendChild(container2);
 	}
 	inGroups.appendChild(container);
+		 },
+		 error: function(e){
+    	console.log(JSON.stringify(e));
+}
+		 
+		
+		 
+	 });
+	
 }
 window.onload = function() 
 {
-	fetchUserProfile();	
-	// displayUserProfile(dummyUser);
-	// displayinGroups(dummyUser);
-	// displayhostingGroups(dummyUser);
+	// TODO: Fetch User Data: fetchUserProfile()	
+	displayUserProfile(dummyUser);
+	displayinGroups("blaydin6@usc.edu","joined");
+	displayhostingGroups("blaydin6@usc.edu","host");
 	console.log("load");
 };
 
@@ -132,36 +150,34 @@ function deleteGroup(group){
 	console.log("in delete");
 	//TODO: requires JDBC function for delete
 	console.log(group);
-	let baseURL = window.location.origin + "/studyconnect/";
-    // TODO: need update with the correct backend endpoint 
-    var url = new URL("DeleteGroup", baseURL); 
-    var params = {
-        email: user,
-		groupid: group.studyGroupID,
-    };
-    url.search = new URLSearchParams(params).toString();
-
-    fetch(url)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok.');
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log(data); // Access data.id, data.name, data.email, etc.
-        })
-        .catch(error => {
-            console.error('There has been a problem with your fetch operation:', error);
-        });
 	//Refresh
-	fetchUserProfile()	
-	// displayUserProfile(dummyUser);
-	// displayinGroups(dummyUser);
-	// displayhostingGroups(dummyUser);
+	// TODO: Fetch User Data: fetchUserProfile()	
+	displayUserProfile(dummyUser);
+	displayinGroups(dummyUser);
+	displayhostingGroups(dummyUser);
 }
 
-function showGroupOverlay(group)
+function showGroupOverlay(group) 
 {
-	console.log("in group overlay");
+    console.log("in show group overlay");
+    const overlay = document.getElementById('group-overlay');
+    const content = document.getElementById('overlay-content');
+	overlay.style.display = ('flex');
+    content.innerHTML = `
+        <h2>${group.studyGroupID}</h2>
+        <p><strong>Course:</strong> ${group.courseID}</p>
+        <p><strong>Location:</strong> ${group.location}</p>
+        <p><strong>Time:</strong> ${group.time}</p>
+        <p><strong>Day:</strong> ${group.day}</p>
+        
+        <h3>Contacts:</h3>
+        <ul>
+            ${group.contacts.map(contact => `<li>${contact.name} - ${contact.phoneNumber} - ${contact.email}</li>`).join('')}
+        </ul>
+    `;
+    overlay.style.display = 'flex'; 
+}
+function closeGroupOverlay() {
+    const overlay = document.getElementById('group-overlay');
+    overlay.style.display = 'none';
 }

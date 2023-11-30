@@ -184,7 +184,7 @@ public class StudyConnectDB {
 				studyGroup.setLocation(rs.getString("location"));
 				studyGroup.setTime(rs.getString("time"));
 				studyGroup.setDay(rs.getString("day"));
-				studyGroup.setEmail(email);
+				//studyGroup.setEmail(email);
 				studyGroups.add(studyGroup);
 			}
 			
@@ -219,12 +219,13 @@ public class StudyConnectDB {
 				
 				// Study group with that studyGroupID is found
 				studyGroup = new StudyGroups();
+				studyGroup.setStudyGroupID(rs.getInt("studyGroupID"));
 				studyGroup.setCourseID(rs.getString("courseID"));
 				studyGroup.setHostID((rs.getInt("hostID")));
 				studyGroup.setLocation(rs.getString("location"));
 				studyGroup.setTime(rs.getString("time"));
 				studyGroup.setDay(rs.getString("day"));
-				studyGroup.setEmail(email);
+				//studyGroup.setEmail(email);
 				
 			}
 			
@@ -289,7 +290,10 @@ public static int getLastStudyGroupID() {
 				//group = new StudyGroup(groupID, user);
 				StudyGroups studyGroup = getGroup(rs.getInt("studyGroupID"));
 				
-				studyGroupsList.add(studyGroup);
+				if(studyGroup.getHostID()!=userID) {
+					studyGroupsList.add(studyGroup);
+				}
+				
 				
 			}
 			
@@ -327,12 +331,13 @@ public static int getLastStudyGroupID() {
 				
 				// Study group with that studyGroupID is found
 				studyGroup = new StudyGroups();
+				studyGroup.setStudyGroupID(rs.getInt("studyGroupID"));
 				studyGroup.setCourseID(rs.getString("courseID"));
 				studyGroup.setHostID((rs.getInt("hostID")));
 				studyGroup.setLocation(rs.getString("location"));
 				studyGroup.setTime(rs.getString("time"));
 				studyGroup.setDay(rs.getString("day"));
-				studyGroup.setEmail(email);
+				//studyGroup.setEmail(email);
 				studyGroups.add(studyGroup);
 			}
 			
